@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "wtf.vd.meprioritizecraft.mixin",
+  "refmap": "${mod_id}.refmap.json",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "AssemblerMatrixBasePriorityMixin",
+    "AssemblerMatrixPatternPriorityMixin",
+    "ItemStackJeiCompatMixin",
+    "NetworkCraftingPatternsForKeyMixin"
+  ],
+  "client": [
+    "AEBaseScreenAccessor",
+    "AssemblerMatrixScreenMixin",
+    "PriorityScreenMixin",
+    "ScreenAccessor"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
