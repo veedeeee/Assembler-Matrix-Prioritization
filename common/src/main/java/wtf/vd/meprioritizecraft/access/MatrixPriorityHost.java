@@ -7,6 +7,4 @@ public interface MatrixPriorityHost {
     void meprioritizecraft$setMatrixPriority(int priority);
 
     void meprioritizecraft$setMatrixPriorityFromCluster(int priority);
-
-    boolean meprioritizecraft$isCore();
 }

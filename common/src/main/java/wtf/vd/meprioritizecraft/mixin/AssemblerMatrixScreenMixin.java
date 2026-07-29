@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import wtf.vd.meprioritizecraft.access.MatrixPriorityHost;
 
 @Pseudo
 @Mixin(targets = "com.glodblock.github.extendedae.client.gui.GuiAssemblerMatrix", remap = false)
@@ -18,10 +17,11 @@ public abstract class AssemblerMatrixScreenMixin {
         try {
             var menu = ((AEBaseScreen<?>) (Object) this).getMenu();
             var host = menu.getClass().getMethod("getHost").invoke(menu);
-            // Only inject the priority button on the core block of the multiblock.
-            // Frame/Glass/Wall blocks all open the same GUI but should not each show
-            // an independent priority button with its own value.
-            if (!(host instanceof MatrixPriorityHost mpHost) || !mpHost.meprioritizecraft$isCore()) {
+            // Only TileAssemblerMatrixPattern implements ICraftingProvider — it is the sole
+            // block in the multiblock that holds patterns and receives priority from AE2's
+            // crafting planner. Other constituent blocks (Frame, Glass, Wall, Speed, etc.)
+            // must not show an independent priority button.
+            if (host == null || !host.getClass().getName().contains("TileAssemblerMatrixPattern")) {
                 return;
             }
         } catch (ReflectiveOperationException e) {
