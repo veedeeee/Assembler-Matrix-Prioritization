@@ -7,7 +7,40 @@ This document defines release-readiness test scenarios for **AE Improved Craftin
 - Primary matrix axis: `AE2 official loader/version support`.
 - `Applied Energistics 2` is required in every scenario.
 - `ExtendedAE` is only included where the target loader/version line supports it.
-- JEI/Jade are not matrix split axes. Treat them as optional non-gating compatibility smoke checks.
+
+## Dependency Mod Requirements
+
+The following dependency mods are **mandatory** in every test scenario. They are not optional and
+must not be treated as smoke-check-only.
+
+| Mod | Role | Loader-match rule |
+| --- | --- | --- |
+| GuideME | AE2 guide overlay | MUST use the build targeting the same ModLoader as the scenario |
+| Jade | In-world tooltip overlay | MUST use the build targeting the same ModLoader as the scenario |
+| JEI | Recipe viewer integration | MUST use the build targeting the same ModLoader as the scenario |
+
+Each dependency mod artifact MUST target the same ModLoader as the scenario being tested. Using a
+Fabric build of JEI/Jade/GuideME in a NeoForge or Forge scenario (or vice-versa) is not
+permitted — even if the game launches without an immediate crash.
+
+### Pinned Modrinth version coordinates — NeoForge 1.21.1
+
+These coordinates are confirmed via Modrinth API (`loaders=["neoforge"]`, `game_versions=["1.21.1"]`):
+
+| Mod | Modrinth coordinate | Version number | Confirmed filename |
+| --- | --- | --- | --- |
+| JEI | `maven.modrinth:jei:sc43sMLj` | `19.42.0.385` | `jei-1.21.1-neoforge-19.42.0.385.jar` |
+| Jade | `maven.modrinth:jade:15.10.5+neoforge` | `15.10.5+neoforge` | `Jade-1.21.1-NeoForge-15.10.5.jar` |
+| GuideME | `maven.modrinth:guideme:rduAfwb7` | `21.1.17` | `guideme-21.1.17.jar` |
+
+> **Note — JEI coordinate format**: `version_number` `19.42.0.385` exists for both NeoForge and
+> Fabric on Modrinth. The Modrinth Maven coordinate MUST use the version `id` (`sc43sMLj`) to
+> guarantee NeoForge artifact resolution.
+
+### Forge 1.20.1 / Fabric 1.20.1
+
+Coordinates for Forge and Fabric loaders will be determined when those scenarios are prepared.
+The same loader-match requirement applies; do not reuse NeoForge IDs for other loaders.
 
 ## AE2 Requirement Snapshot
 
@@ -22,9 +55,11 @@ The previous `1.21`-based matrix is aborted because it does not match the offici
 
 | Scenario ID | Minecraft | Loader | AE2 | ExtendedAE profile | Required checks |
 | --- | --- | --- | --- | --- | --- |
-| LxV-NF-211 | 1.21.1 | NeoForge | installed | on + off where supported | F1, F2, F3 |
-| LxV-FG-201 | 1.20.1 | Forge | installed | on + off where supported | F1, F2, F3 |
-| LxV-FB-201 | 1.20.1 | Fabric | installed | off unless ExtendedAE support is explicitly available | F1, F3 |
+| A-NF-211 | 1.21.1 | NeoForge | installed | off | F1, F2, F3 |
+| B-NF-211 | 1.21.1 | NeoForge | installed | on | F1, F2, F3 |
+| A-FG-201 | 1.20.1 | Forge | installed | off | F1, F2, F3 |
+| B-FG-201 | 1.20.1 | Forge | installed | on | F1, F2, F3 |
+| A-FB-201 | 1.20.1 | Fabric | installed | off | F1, F3 |
 
 ## Common Setup
 
