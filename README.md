@@ -1,77 +1,55 @@
-* Japanese desciption is in below
-* Other languages are in [docs/](docs/) directory. Machine translated.
+* Japanese description is in below
 
-# AE2: Improved Crafting Prioritization
-This improves provider-level crafting priority behavior for ME Pattern Provider.
+# Matrix Assembler Prioritization
 
-## Dependencies MODs
+An add-on for [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2) and [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider) that adds a priority setting to the Matrix Assembler.
+
+## Dependencies
+
 ### Required
-- [https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2](Applied Energistics 2)
-### Optional
-- [https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider](ExtendedAE)
+- [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
 
-## Function 1: Improve ingredients resolving
-### AE2 behavior
-- You can register multiple recipes for same output. Like `8x Oak Planks -> Chest` and `8x Cherry Planks -> Chest`.
-- If you put 1 as crafting priority on the ME Pattern Provider for the Oak Planks recipe, and you put 2 for the Cherry Planks recipe, your autocrafting system sees **Cherry Planks first**, then Oak Planks.
+### Optional (loaded transitively via ExtendedAE)
+- [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2)
 
-| Stocked qty<br>of Oak Plank | Stocked qty<br>of Cherry Plank | Ordered | Crafting Work |
-| --- | --- | --- | --- |
-|  8 |  0 | 1x Chest | Works with 8x Oak Planks |
-|  0 | 24 | 3x Chest | Works with 24x Cherry Planks |
-|  8 | 16 | 3x Chest | :no_entry: **Missing ingredients!**<br>Needs 8x more Cherry Planks |
+## Feature: Matrix Assembler Priority
 
-### This MOD's behavior
-This mod solves this situation. You will be able to order 3 Chests with 8x Oak Planks and 16x Cherry Planks.
-#### MOD Creator's scenario
-- Ordering a bunch of Iron Ingots or Osumium Ingots on **Mekanism**. Also having **Mystical Agriculture**.
-- I would put higher priority for the Crafting Pattern with Essence, and lower priority for the Smelting Pattern with dusts.
-
-## Function 2: Matrix Assembler is having priority
 ### ExtendedAE behavior
-The Matrix Assembler from ExtendedAE doesn't have prioritize menu.
+The Matrix Assembler from ExtendedAE does not have a priority menu. There is no way to control which Matrix Assembler is preferred when multiple assemblers can produce the same output.
+
 ### This MOD's behavior
-Now, it is having.
-#### MOD Creator's scenario
-Yes I love Matrix Assembler and I put many recipes into it. I don't care details. Put 1000 priority for those.
-- Same thing I wrote in avobe should work fine. Essence vs smelting Dusts.
-- Also works for Certus Quartz. Use Essence first. Then run the loop with Crusher and Reaction Chamber for the rest.
+Adds a priority UI to the Matrix Assembler — the same UI used by the ME Storage Bus. Higher number means higher priority. Default priority is 0.
+
+When multiple Matrix Assemblers (or a Matrix Assembler and a Pattern Provider) can craft the same item, the one with the higher priority is used first. If the highest-priority provider cannot fully satisfy the request due to insufficient materials, the system falls back to lower-priority providers.
+
+#### Example scenarios
+- Put priority 1000 on your Matrix Assemblers to always prefer them over other providers.
+- Use Certus Quartz Essence (high priority) first, then fall back to the Crusher + Reaction Chamber loop (lower priority) for the rest.
 
 ---
 
-# AE Improved Crafting Prioritization
-これは AE2 向けのアドオン MOD です。
-MEパターンプロバイダー に対する、プロバイダー単位のクラフト優先度の挙動を改善します。
+# Matrix Assembler Prioritization（日本語）
 
-## 前提MOD
+[Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2) と [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider) のアドオン MOD です。組立マトリックスに優先度設定を追加します。
+
+## 前提 MOD
+
 ### 必須
-- [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2)
-### 任意
 - [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
 
-## 機能 1: 素材解決の改善
-### AE2 の挙動
-- 同じ出力に対して複数レシピを登録できます。例: `8x オークの板材 -> チェスト` と `8x サクラの板材 -> チェスト`。
-- オークの板材レシピのMEパターンプロバイダーにクラフト優先度 1、サクラの板材レシピに 2 を設定すると、オートクラフトは **サクラの板材を先に** 確認します。その後にオークの板材を見ます。
+### 任意（ExtendedAE 経由で間接的に必要）
+- [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2)
 
-| オークの板材<br>の在庫数 | サクラの板材<br>の在庫数 | 注文 | クラフト結果 |
-| --- | --- | --- | --- |
-|  8 |  0 | 1x チェスト | 8x オークの板材 でクラフト可能 |
-|  0 | 24 | 3x チェスト | 24x サクラの板材 でクラフト可能 |
-|  8 | 16 | 3x チェスト | :no_entry: **素材不足!**<br>サクラの板材 がさらに 8x 必要 |
+## 機能: 組立マトリックスの優先度設定
 
-### この MOD の挙動
-この MOD はこの状況を解決します。8x オークの板材 と 16x サクラの板材 を使った 3 個の チェスト 発注が可能になります。
-#### MOD 制作者の想定シナリオ
-- **Mystical Agriculture**導入環境で、鉄インゴットやオスミウムインゴットを大量注文する場合
-- エッセンスを使うクラフトパターンを高優先度に、ダストを使う精錬パターンを低優先度に設定しておけば、可能な限りエッセンスでのクラフトをする
-
-## 機能 2: 組立マトリックス の優先度対応
 ### ExtendedAE の挙動
-ExtendedAE の 組立マトリックス には優先度メニューがありません。
+ExtendedAE の組立マトリックスには優先度メニューがありません。同じ出力を複数の組立マトリックスが生産できる場合、どちらが優先されるかを制御する手段がありません。
+
 ### この MOD の挙動
-この MOD で優先度を設定できるようになります。
-#### MOD 制作者の想定シナリオ
-組立マトリックスにとにかくレシピを突っ込んで、優先度は適当に1000とかにしておく。
-- 上で書いたエッセンスと精錬の使い分けも問題なく動作します。
-- ケルタスクォーツでも有効。まずある限りのエッセンスを使い、残りは粉砕機とリアクションチャンバーのループで増殖させる。
+組立マトリックスに ME ストレージバスと同じ優先度 UI を追加します。数字が大きいほど優先度が高く、デフォルトは 0 です。
+
+複数の組立マトリックス（またはパターンプロバイダーとの組み合わせ）が同じアイテムをクラフトできる場合、優先度の高い方が先に使用されます。優先度の高いプロバイダーの素材が不足している場合は、低優先度のプロバイダーにフォールバックします。
+
+#### 想定シナリオ
+- 組立マトリックスに優先度 1000 を設定して、他のプロバイダーより常に優先させる。
+- ケルタスクォーツ: まずエッセンス（高優先度）を使い、足りない分は粉砕機＋リアクションチャンバーのループ（低優先度）で補う。
