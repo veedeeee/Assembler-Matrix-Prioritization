@@ -1,10 +1,8 @@
 package wtf.vd.meprioritizecraft.mixin;
 
 import appeng.api.networking.crafting.ICraftingProvider;
-import appeng.blockentity.grid.AENetworkedBlockEntity;
 import appeng.helpers.IPriorityHost;
 import appeng.menu.ISubMenu;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,19 +25,9 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
     @Unique
     private int meprioritizecraft$matrixPriority;
 
-    @Inject(method = "saveAdditional(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V", at = @At("TAIL"), require = 0)
-    private void meprioritizecraft$savePriorityWithLookup(CompoundTag data, HolderLookup.Provider registries, CallbackInfo ci) {
-        meprioritizecraft$writePriority(data);
-    }
-
     @Inject(method = "saveAdditional(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("TAIL"), require = 0)
     private void meprioritizecraft$savePriorityLegacy(CompoundTag data, CallbackInfo ci) {
         meprioritizecraft$writePriority(data);
-    }
-
-    @Inject(method = "loadTag(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V", at = @At("TAIL"), require = 0)
-    private void meprioritizecraft$loadPriorityWithLookup(CompoundTag data, HolderLookup.Provider registries, CallbackInfo ci) {
-        meprioritizecraft$readPriority(data);
     }
 
     @Inject(method = "loadTag(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("TAIL"), require = 0)
@@ -69,7 +57,7 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
         }
 
         this.meprioritizecraft$matrixPriority = priority;
-        ((AENetworkedBlockEntity) (Object) this).saveChanges();
+        meprioritizecraft$invokeNoArg(this, "saveChanges");
         this.meprioritizecraft$syncClusterPriority(priority);
     }
 
@@ -80,17 +68,44 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
         }
 
         this.meprioritizecraft$matrixPriority = priority;
-        ((AENetworkedBlockEntity) (Object) this).saveChanges();
+        meprioritizecraft$invokeNoArg(this, "saveChanges");
     }
 
     @Override
     public void returnToMainMenu(Player player, ISubMenu subMenu) {
         try {
-            var method = Player.class.getDeclaredMethod("closeContainer");
-            method.setAccessible(true);
-            method.invoke(player);
+            var containerClass = Class.forName("com.glodblock.github.extendedae.container.ContainerAssemblerMatrix");
+            var menuType = containerClass.getField("TYPE").get(null);
+            var menuOpenerClass = Class.forName("appeng.menu.MenuOpener");
+            var locator = subMenu.getLocator();
+
+            // AE2 uses different locator types across versions (MenuLocator in 1.20.1, MenuHostLocator in 1.21+).
+            // Try the locator's concrete type and its supertypes first, then fall back to any 3-arg returnTo.
+            java.lang.reflect.Method returnToMethod = null;
+            for (var locatorType : new Class<?>[]{ locator.getClass(), locator.getClass().getSuperclass() }) {
+                if (locatorType == null) continue;
+                try {
+                    returnToMethod = menuOpenerClass.getMethod("returnTo",
+                            net.minecraft.world.inventory.MenuType.class,
+                            Player.class,
+                            locatorType);
+                    break;
+                } catch (NoSuchMethodException ignored) {}
+            }
+            if (returnToMethod == null) {
+                for (var method : menuOpenerClass.getMethods()) {
+                    if (method.getName().equals("returnTo") && method.getParameterCount() == 3) {
+                        returnToMethod = method;
+                        break;
+                    }
+                }
+            }
+            if (returnToMethod == null) {
+                throw new IllegalStateException("returnTo method not found on MenuOpener");
+            }
+            returnToMethod.invoke(null, menuType, player, locator);
         } catch (ReflectiveOperationException e) {
-            throw new IllegalStateException("Failed to close menu for matrix priority host", e);
+            throw new IllegalStateException("Failed to return to assembler matrix menu", e);
         }
     }
 
@@ -116,12 +131,35 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
             if (pattern instanceof MatrixPriorityHost host) {
                 host.meprioritizecraft$setMatrixPriorityFromCluster(priority);
             }
-            if (pattern instanceof ICraftingProvider && pattern instanceof AENetworkedBlockEntity networkedBlockEntity) {
-                ICraftingProvider.requestUpdate(networkedBlockEntity.getMainNode());
+            if (pattern instanceof ICraftingProvider craftingProvider) {
+                meprioritizecraft$requestUpdate(craftingProvider, pattern);
             }
         }
     }
 
+
+    @Unique
+    private static void meprioritizecraft$requestUpdate(ICraftingProvider craftingProvider, Object holder) {
+        var mainNode = meprioritizecraft$invokeNoArg(holder, "getMainNode");
+        if (mainNode == null) {
+            return;
+        }
+
+        for (var method : ICraftingProvider.class.getMethods()) {
+            if (!method.getName().equals("requestUpdate") || method.getParameterCount() != 1) {
+                continue;
+            }
+
+            try {
+                method.invoke(null, mainNode);
+                return;
+            } catch (ReflectiveOperationException e) {
+                throw new IllegalStateException("Failed to request crafting update for " + holder.getClass(), e);
+            }
+        }
+
+        throw new IllegalStateException("No requestUpdate(node) method found on ICraftingProvider");
+    }
     @Unique
     private static Object meprioritizecraft$invokeNoArg(Object target, String methodName) {
         try {
@@ -169,3 +207,4 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
         this.meprioritizecraft$matrixPriority = meprioritizecraft$invokeReadIntOr(data, MEPRIORITIZECRAFT_PRIORITY_TAG, 0);
     }
 }
+
