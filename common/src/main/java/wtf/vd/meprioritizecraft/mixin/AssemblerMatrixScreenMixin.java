@@ -14,19 +14,6 @@ public abstract class AssemblerMatrixScreenMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"), require = 0)
     private void meprioritizecraft$addPriorityButton(CallbackInfo ci) {
-        try {
-            var menu = ((AEBaseScreen<?>) (Object) this).getMenu();
-            var host = menu.getClass().getMethod("getHost").invoke(menu);
-            // Only TileAssemblerMatrixPattern implements ICraftingProvider — it is the sole
-            // block in the multiblock that holds patterns and receives priority from AE2's
-            // crafting planner. Other constituent blocks (Frame, Glass, Wall, Speed, etc.)
-            // must not show an independent priority button.
-            if (host == null || !host.getClass().getName().contains("TileAssemblerMatrixPattern")) {
-                return;
-            }
-        } catch (ReflectiveOperationException e) {
-            return;
-        }
         var style = ((AEBaseScreen<?>) (Object) this).getStyle();
         var widgetMap = ((ScreenStyleAccessor) style).meprioritizecraft$getWidgetMap();
         if (!widgetMap.containsKey("openPriority")) {
