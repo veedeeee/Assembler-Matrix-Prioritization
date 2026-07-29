@@ -1,8 +1,8 @@
-# Matrix Assembler Prioritization
+# Assembler Matrix Prioritization
 
 ## English
 
-**Matrix Assembler Prioritization** adds a priority setting to the Assembler Matrix from ExtendedAE, using the same UI as the ME Storage Bus. Higher numbers mean higher priority (default: 0).
+**Assembler Matrix Prioritization** adds a priority setting to the Assembler Matrix from ExtendedAE, using the same UI as the ME Storage Bus. Higher numbers mean higher priority (default: 0).
 
 When multiple providers can craft the same item, the one with the highest priority is used first. If it cannot fully satisfy the request, lower-priority providers fill the remainder.
 
@@ -19,7 +19,7 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 
 ## 日本語
 
-**Matrix Assembler Prioritization** は、ExtendedAE の組立マトリックスに優先度設定を追加します。ME ストレージバスと同じ UI で優先度を設定できます（数値が大きいほど優先度が高く、デフォルトは 0）。
+**Assembler Matrix Prioritization** は、ExtendedAE の組立マトリックスに優先度設定を追加します。ME ストレージバスと同じ UI で優先度を設定できます（数値が大きいほど優先度が高く、デフォルトは 0）。
 
 同じアイテムを複数のプロバイダーがクラフトできる場合、優先度の高い方が先に使用されます。素材が不足している場合は、低優先度のプロバイダーにフォールバックします。
 
@@ -36,7 +36,7 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 
 ## 한국어
 
-**Matrix Assembler Prioritization**은 ExtendedAE의 조합 매트릭스에 우선순위 설정 기능을 추가합니다. ME 저장 버스와 동일한 UI를 사용하며, 숫자가 클수록 우선순위가 높습니다(기본값: 0).
+**Assembler Matrix Prioritization**은 ExtendedAE의 조합 매트릭스에 우선순위 설정 기능을 추가합니다. ME 저장 버스와 동일한 UI를 사용하며, 숫자가 클수록 우선순위가 높습니다(기본값: 0).
 
 여러 공급자가 동일한 아이템을 제작할 수 있을 때, 우선순위가 높은 공급자가 먼저 사용됩니다. 재료가 부족한 경우 낮은 우선순위의 공급자로 폴백됩니다.
 
@@ -53,7 +53,7 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 
 ## 繁體中文
 
-**Matrix Assembler Prioritization** 為 ExtendedAE 的裝配矩陣新增優先度設定功能，使用與 ME 儲存匯流排相同的介面。數值越大優先度越高（預設值：0）。
+**Assembler Matrix Prioritization** 為 ExtendedAE 的裝配矩陣新增優先度設定功能，使用與 ME 儲存匯流排相同的介面。數值越大優先度越高（預設值：0）。
 
 當多個提供者能夠合成同一物品時，優先度較高者會優先被使用。若材料不足，則會向優先度較低的提供者回退。
 
@@ -70,7 +70,7 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 
 ## 简体中文
 
-**Matrix Assembler Prioritization** 为 ExtendedAE 的装配矩阵添加优先级设置功能，使用与 ME 存储总线相同的界面。数值越大优先级越高（默认值：0）。
+**Assembler Matrix Prioritization** 为 ExtendedAE 的装配矩阵添加优先级设置功能，使用与 ME 存储总线相同的界面。数值越大优先级越高（默认值：0）。
 
 当多个提供者能够合成同一物品时，优先级较高的提供者会被优先使用。若材料不足，则会回退至优先级较低的提供者。
 
