@@ -41,5 +41,12 @@ sourceSets.main.resources { srcDir 'src/generated/resources' }
 dependencies {
     compileOnly "maven.modrinth:ae2:${ae2_version}"
     runtimeOnly "maven.modrinth:ae2:${ae2_version}"
-    runtimeOnly "org.appliedenergistics:guideme:21.1.1"
+    // Use Modrinth version ID (sc43sMLj) instead of version_number to avoid resolving the Fabric build.
+    // version_number 19.42.0.385 exists for both neoforge and fabric on Modrinth.
+    runtimeOnly "maven.modrinth:jei:sc43sMLj"
+    runtimeOnly "maven.modrinth:jade:15.10.5+neoforge"
+    // Switched from org.appliedenergistics Maven to Modrinth NeoForge-targeted build (1.21.1).
+    runtimeOnly "maven.modrinth:guideme:rduAfwb7"
+    runtimeOnly "maven.modrinth:glodium:1.21-2.2-neoforge"
+    runtimeOnly "maven.modrinth:extended-ae:1.21-2.2.29-neoforge"
 }

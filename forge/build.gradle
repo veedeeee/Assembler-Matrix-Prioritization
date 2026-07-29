@@ -3,20 +3,51 @@ plugins {
     id 'net.minecraftforge.gradle' version '[6.0.24,6.2)'
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
 }
-base {
-    archivesName = "${mod_name}-forge-${minecraft_version}"
+
+def forgeMinecraftVersion = '1.20.1'
+def forgeVersion = '47.4.22'
+def forgeLoaderVersionRange = '[47,)'
+def forgeMinecraftVersionRange = '[1.20.1, 1.21)'
+
+ext.minecraft_version = forgeMinecraftVersion
+ext.minecraft_version_range = forgeMinecraftVersionRange
+ext.forge_version = forgeVersion
+ext.forge_loader_version_range = forgeLoaderVersionRange
+
+repositories {
+    maven {
+        name = "Modmaven"
+        url = "https://modmaven.dev/"
+        content {
+            includeGroup "appeng"
+            includeGroup "org.appliedenergistics"
+            includeGroup "mezz.jei"
+        }
+    }
+    maven {
+        name = "Cursemaven"
+        url = "https://www.cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
+
+base {
+    archivesName = "${mod_name}-forge-${forgeMinecraftVersion}"
+}
+
 mixin {
     config("${mod_id}.mixins.json")
     config("${mod_id}.forge.mixins.json")
 }
 
 minecraft {
-    mappings channel: 'official', version: minecraft_version
+    mappings channel: 'official', version: forgeMinecraftVersion
 
     copyIdeResources = true //Calls processResources when in dev
 
-    reobf = false // Forge 1.20.6+ uses official mappings at runtime, so we shouldn't reobf from official to SRG
+    reobf = true // Forge 1.20.1 runtime expects SRG-style names for many Forge mods
 
     // Automatically enable forge AccessTransformers if the file exists
     // This location is hardcoded in Forge and can not be changed.
@@ -67,10 +98,15 @@ minecraft {
 sourceSets.main.resources.srcDir 'src/generated/resources'
 
 dependencies {
-    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    minecraft "net.minecraftforge:forge:${forgeMinecraftVersion}-${forgeVersion}"
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
-    compileOnly "maven.modrinth:ae2:${ae2_version}"
-    runtimeOnly "maven.modrinth:ae2:${ae2_version}"
+    compileOnly fg.deobf("appeng:appliedenergistics2-forge:15.4.10")
+    runtimeOnly fg.deobf("appeng:appliedenergistics2-forge:15.4.10")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:15.0.0.12")
+    runtimeOnly fg.deobf("curse.maven:jade-324717:4573193")
+    runtimeOnly fg.deobf("org.appliedenergistics:guideme:20.1.7")
+    runtimeOnly fg.deobf("curse.maven:ex-pattern-provider-892005:7144417")
+    runtimeOnly fg.deobf("curse.maven:glodium-957920:5226922")
 
     // Forge's hack fix
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
@@ -89,3 +125,15 @@ sourceSets.each {
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
 }
+
+
+
+
+
+
+
+
+
+
+
+

@@ -2,6 +2,12 @@ plugins {
     id 'multiloader-loader'
     id 'fabric-loom'
 }
+
+repositories {
+    // Team Reborn Energy API (bundled in AE2 JIJ, but needed explicitly in dev)
+    maven { url "https://maven.modmuss50.me" }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.layered {
@@ -10,8 +16,8 @@ dependencies {
     }
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-    compileOnly "maven.modrinth:ae2:${ae2_version}"
-    runtimeOnly "maven.modrinth:ae2:${ae2_version}"
+    modImplementation "maven.modrinth:ae2:${ae2_version}"
+    modRuntimeOnly("teamreborn:energy:3.0.0") { transitive = false }
 }
 
 loom {
