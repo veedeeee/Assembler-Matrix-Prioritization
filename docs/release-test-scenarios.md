@@ -123,8 +123,60 @@ Failure signals:
 - open-screen handling errors, GUI freeze, or immediate client crash.
 - Priority button disappears, is inverted, or is not interactable.
 
+## Cross-Type Priority Test Scenarios
+
+These scenarios validate Goal 1-A and Goal 1-B: cross-type priority selection and fallback across
+different pattern types (Crafting vs Processing/Smelting).
+
+Applies to: A-NF-211, B-NF-211, A-FG-201, B-FG-201 (all loaders that support crafting + processing patterns)
+
+### T-CROSSTYPE-1: Goal 1-A — Priority Selection Across Pattern Types
+
+Setup:
+- Pattern Provider A: Processing Pattern (Smelting) — Raw Iron → Iron Ingot, priority = 100
+- Pattern Provider B: Crafting Pattern — 9x Iron Nuggets → Iron Ingot, priority = 0 (default)
+- ME network contains both Raw Iron and Iron Nuggets in stock
+
+Steps:
+1. Order 1x Iron Ingot.
+2. Confirm which provider was used (did Provider A's Raw Iron decrease?).
+3. Remove all Raw Iron from the network.
+4. Order 1x Iron Ingot again.
+5. Confirm Provider B was used this time.
+
+Expected:
+- Step 2: Provider A (Processing, higher priority) is selected.
+- Step 5: Provider B (Crafting, lower priority) is used as fallback when A cannot satisfy.
+
+Failure signals:
+- Provider B selected when A can satisfy (priority ignored).
+- Crafting fails when Raw Iron is absent (no fallback to B).
+
+### T-CROSSTYPE-2: Goal 1-B — Cross-Type Fallback on Partial Insufficiency
+
+Setup:
+- Pattern Provider A: Processing Pattern (Smelting) — Raw Iron → Iron Ingot, priority = 100;
+  only 1x Raw Iron in stock.
+- Pattern Provider B: Crafting Pattern — 9x Iron Nuggets → Iron Ingot, priority = 0;
+  18+ Iron Nuggets in stock.
+
+Steps:
+1. Order 3x Iron Ingot.
+2. Inspect the crafting plan: confirm A is assigned 1 unit and B is assigned 2 units.
+3. Start crafting and confirm 3x Iron Ingot produced.
+
+Expected:
+- Crafting plan splits: A handles 1x (limited by Raw Iron stock), B handles 2x.
+- Combined result: 3x Iron Ingot completed.
+
+Failure signals:
+- Crafting plan assigns all 3 to A and fails (no fallback split).
+- Crafting plan assigns all 3 to B (priority ignored).
+- Planning error or planner collapse when both providers are available but A is insufficient alone.
+
 ## Exit Criteria
 
 - All applicable scenarios from the official AE2 matrix pass.
 - No critical crash in client logs during scenario execution.
 - Priority behavior is consistent with provider-level priority semantics across loaders.
+- T-CROSSTYPE-1 and T-CROSSTYPE-2 pass on all loaders that support both crafting and processing patterns.
