@@ -3,7 +3,9 @@
   "minVersion": "0.8",
   "package": "wtf.vd.meprioritizecraft.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
+  "mixins": [
+    "AssemblerMatrixBasePrioritySaveMixin"
+  ],
   "client": [],
   "server": [],
   "injectors": {
