@@ -40,13 +40,6 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
         return this.meprioritizecraft$matrixPriority;
     }
 
-    // ICraftingProvider.getPatternPriority() — not declared in this mixin's implements clause,
-    // so @Override is intentionally omitted. Mixin merges this method into TileAssemblerMatrixBase
-    // which does implement ICraftingProvider, wiring the priority into AE2's crafting planner.
-    public int getPatternPriority() {
-        return this.meprioritizecraft$matrixPriority;
-    }
-
     @Override
     public void setPriority(int priority) {
         this.meprioritizecraft$setMatrixPriority(priority);

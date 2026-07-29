@@ -6,15 +6,11 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "AssemblerMatrixBasePriorityMixin",
-    "AssemblerMatrixPatternPriorityMixin",
-    "ItemStackJeiCompatMixin",
-    "NetworkCraftingPatternsForKeyMixin"
+    "ItemStackJeiCompatMixin"
   ],
   "client": [
     "AEBaseScreenAccessor",
     "AssemblerMatrixScreenMixin",
-    "PriorityScreenMixin",
-    "ScreenAccessor",
     "ScreenStyleAccessor"
   ],
   "server": [],
