@@ -1,4 +1,4 @@
-# AE Improved Crafting Prioritization
+# AE2: Improved Crafting Prioritization
 Dies ist ein Add-on-Mod für AE2.
 Dieser Mod verbessert das Prioritätsverhalten beim Crafting auf Provider-Ebene für den ME Schablonen-Provider.
 

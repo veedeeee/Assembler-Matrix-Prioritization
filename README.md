@@ -1,8 +1,7 @@
 * Japanese desciption is in below
 * Other languages are in [docs/](docs/) directory. Machine translated.
 
-# AE Improved Crafting Prioritization
-This is an add-on mod for AE2.
+# AE2: Improved Crafting Prioritization
 This improves provider-level crafting priority behavior for ME Pattern Provider.
 
 ## Dependencies MODs

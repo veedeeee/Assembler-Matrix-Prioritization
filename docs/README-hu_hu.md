@@ -1,4 +1,4 @@
-# AE Improved Crafting Prioritization
+# AE2: Improved Crafting Prioritization
 Ez egy kiegészítő mod az AE2-höz.
 Ez a mod javítja a szolgáltató szintű crafting prioritási működést a ME Pattern Provider esetén.
 

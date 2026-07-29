@@ -1,4 +1,4 @@
-# AE Improved Crafting Prioritization
+# AE2: Improved Crafting Prioritization
 Ceci est un mod complémentaire pour AE2.
 Ce mod améliore le comportement de priorité d'artisanat au niveau du fournisseur pour le Fournisseur de pattern ME.
 

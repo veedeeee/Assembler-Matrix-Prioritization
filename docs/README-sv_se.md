@@ -1,4 +1,4 @@
-# AE Improved Crafting Prioritization
+# AE2: Improved Crafting Prioritization
 Detta är en tilläggsmod för AE2.
 Den här modden förbättrar beteendet för crafting-prioritet på provider-nivå för Mönsterleverantör för ME.
 

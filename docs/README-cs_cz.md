@@ -1,4 +1,4 @@
-# AE Improved Crafting Prioritization
+# AE2: Improved Crafting Prioritization
 Toto je doplňkový mod pro AE2.
 Tento mod zlepšuje chování priority craftění na úrovni provideru pro Poskytovatel ME gesta.
 

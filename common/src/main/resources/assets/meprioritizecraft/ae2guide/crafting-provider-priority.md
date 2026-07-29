@@ -7,7 +7,7 @@ navigation:
 
 # Crafting Provider Priority
 
-AE Improved Crafting Prioritization adds AE2-style provider priority behavior for crafting providers.
+AE2: Improved Crafting Prioritization adds AE2-style provider priority behavior for crafting providers.
 
 It covers:
 - AE2 Pattern Providers

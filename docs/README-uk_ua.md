@@ -1,4 +1,4 @@
-# AE Improved Crafting Prioritization
+# AE2: Improved Crafting Prioritization
 Це додатковий мод для AE2.
 Цей мод покращує поведінку пріоритету крафту на рівні провайдера для ME Постачальник шаблонів.
 

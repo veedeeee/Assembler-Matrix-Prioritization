@@ -1,6 +1,6 @@
 # Release Test Scenarios
 
-This document defines release-readiness test scenarios for **AE Improved Crafting Prioritization**.
+This document defines release-readiness test scenarios for **AE2: Improved Crafting Prioritization**.
 
 ## Scope and Axes
 

@@ -1,4 +1,4 @@
-# AE Improved Crafting Prioritization
+# AE2: Improved Crafting Prioritization
 Questa è una mod aggiuntiva per AE2.
 Questa mod migliora il comportamento di priorità del crafting a livello di provider per Interfaccia per modelli ME.
 

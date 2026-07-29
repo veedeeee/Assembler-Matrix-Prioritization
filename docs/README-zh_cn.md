@@ -1,4 +1,4 @@
-# AE Improved Crafting Prioritization
+# AE2: Improved Crafting Prioritization
 这是一个用于 AE2 的附加模组。
 该模组改进了 ME样板供应器 的提供器级合成优先级行为。
 

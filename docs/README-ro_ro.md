@@ -1,4 +1,4 @@
-# AE Improved Crafting Prioritization
+# AE2: Improved Crafting Prioritization
 Acesta este un mod add-on pentru AE2.
 Acest mod îmbunătățește comportamentul priorității de crafting la nivel de provider pentru Furnizor Model ME.
 

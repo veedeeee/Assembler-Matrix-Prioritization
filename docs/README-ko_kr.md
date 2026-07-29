@@ -1,4 +1,4 @@
-# AE Improved Crafting Prioritization
+# AE2: Improved Crafting Prioritization
 이 모드는 AE2용 애드온 모드입니다.
 이 모드는 패턴 공급기의 공급자 단위 제작 우선순위 동작을 개선합니다.
 

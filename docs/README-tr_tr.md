@@ -1,4 +1,4 @@
-# AE Improved Crafting Prioritization
+# AE2: Improved Crafting Prioritization
 Bu, AE2 için bir eklenti modudur.
 Bu mod, ME Şablon Sağlayıcı için sağlayıcı seviyesindeki crafting önceliği davranışını iyileştirir.
 
