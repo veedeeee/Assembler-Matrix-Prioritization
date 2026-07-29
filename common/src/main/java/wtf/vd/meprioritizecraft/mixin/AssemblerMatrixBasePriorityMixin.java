@@ -129,15 +129,28 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
             return;
         }
 
+        // Propagate to all block entities in the cluster (Frame/Glass/Wall/Pattern/etc.)
+        // so that whichever outer block the player right-clicks next shows the correct value.
+        var blockEntities = meprioritizecraft$invokeNoArg(cluster, "getBlockEntities");
+        if (blockEntities instanceof Iterable<?> beIterable) {
+            for (var be : beIterable) {
+                if (be == (Object) this) {
+                    continue; // already updated in setMatrixPriority
+                }
+                if (be instanceof MatrixPriorityHost host) {
+                    host.meprioritizecraft$setMatrixPriorityFromCluster(priority);
+                }
+            }
+        }
+
+        // Additionally trigger ICraftingProvider.requestUpdate on Pattern blocks so that
+        // AE2's crafting planner re-reads the updated getPatternPriority() value.
         var patterns = meprioritizecraft$invokeNoArg(cluster, "getPatterns");
         if (!(patterns instanceof Iterable<?> iterable)) {
             return;
         }
 
         for (var pattern : iterable) {
-            if (pattern instanceof MatrixPriorityHost host) {
-                host.meprioritizecraft$setMatrixPriorityFromCluster(priority);
-            }
             if (pattern instanceof ICraftingProvider craftingProvider) {
                 meprioritizecraft$requestUpdate(craftingProvider, pattern);
             }
