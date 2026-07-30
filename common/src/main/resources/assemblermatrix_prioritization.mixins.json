@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "wtf.vd.assemblermatrix_prioritization.mixin",
+  "refmap": "${mod_id}.refmap.json",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "AssemblerMatrixBasePriorityMixin",
+    "ItemStackJeiCompatMixin"
+  ],
+  "client": [
+    "AEBaseScreenAccessor",
+    "AssemblerMatrixScreenMixin",
+    "ScreenStyleAccessor"
+  ],
+  "server": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
+

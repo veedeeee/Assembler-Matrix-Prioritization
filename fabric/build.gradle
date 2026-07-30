@@ -18,6 +18,8 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
     modImplementation "maven.modrinth:ae2:${ae2_version}"
     modRuntimeOnly("teamreborn:energy:3.0.0") { transitive = false }
+    modRuntimeOnly "maven.modrinth:extended-ae:${extendedae_version}"
+    modRuntimeOnly files("libs/configuration-fabric-1.20.1-2.2.0.jar")
 }
 
 loom {

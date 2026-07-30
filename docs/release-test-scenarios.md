@@ -1,12 +1,15 @@
 # Release Test Scenarios
 
-This document defines release-readiness test scenarios for **AE2: Improved Crafting Prioritization**.
+This document defines release-readiness test scenarios for **Assembler Matrix Prioritization**.
 
 ## Scope and Axes
 
 - Primary matrix axis: `AE2 official loader/version support`.
-- `Applied Energistics 2` is required in every scenario.
-- `ExtendedAE` is only included where the target loader/version line supports it.
+- `ExtendedAE` is **required** in every test scenario. Scenarios without ExtendedAE are out of scope.
+- `Applied Energistics 2` is loaded transitively via ExtendedAE.
+- F1 (AE2 Pattern Provider Priority) is native AE2 behavior and is **out of scope** for this MOD.
+- All scenarios in this document assume ExtendedAE is installed and active.
+- **Fabric is out of scope**: ExtendedAE does not implement Assembler Matrix on Fabric. No Fabric scenarios are included.
 
 ## Dependency Mod Requirements
 
@@ -15,6 +18,7 @@ must not be treated as smoke-check-only.
 
 | Mod | Role | Loader-match rule |
 | --- | --- | --- |
+| ExtendedAE | Required MOD dependency (provides Assembler Matrix) | MUST use the build targeting the same ModLoader as the scenario |
 | GuideME | AE2 guide overlay | MUST use the build targeting the same ModLoader as the scenario |
 | Jade | In-world tooltip overlay | MUST use the build targeting the same ModLoader as the scenario |
 | JEI | Recipe viewer integration | MUST use the build targeting the same ModLoader as the scenario |
@@ -42,52 +46,42 @@ These coordinates are confirmed via Modrinth API (`loaders=["neoforge"]`, `game_
 Coordinates for Forge and Fabric loaders will be determined when those scenarios are prepared.
 The same loader-match requirement applies; do not reuse NeoForge IDs for other loaders.
 
+### Fabric 1.21.1
+
+Coordinates to be determined.
+
 ## AE2 Requirement Snapshot
 
 Current official AE2 downloads expose these relevant lines:
 
 - `1.21.1`: NeoForge
-- `1.20.1`: Forge / Fabric
+- `1.20.1`: Forge / ~~Fabric~~ (Fabric is out of scope for this MOD)
 
 The previous `1.21`-based matrix is aborted because it does not match the official AE2 requirement set.
 
 ## Scenario Matrix
 
-| Scenario ID | Minecraft | Loader | AE2 | ExtendedAE profile | Required checks |
-| --- | --- | --- | --- | --- | --- |
-| A-NF-211 | 1.21.1 | NeoForge | installed | off | F1, F2, F3 |
-| B-NF-211 | 1.21.1 | NeoForge | installed | on | F1, F2, F3 |
-| A-FG-201 | 1.20.1 | Forge | installed | off | F1, F2, F3 |
-| B-FG-201 | 1.20.1 | Forge | installed | on | F1, F2, F3 |
-| A-FB-201 | 1.20.1 | Fabric | installed | off | F1, F3 |
+| Scenario ID | Minecraft | Loader | Required checks |
+| --- | --- | --- | --- |
+| B-NF-211 | 1.21.1 | NeoForge | F2, F3, T-CROSSTYPE-1, T-CROSSTYPE-2 |
+| B-FG-201 | 1.20.1 | Forge | F2, F3, T-CROSSTYPE-1, T-CROSSTYPE-2 |
 
 ## Common Setup
 
-1. Start a new test world with AE2 installed and available for the target loader/version line.
-2. Build a minimal ME network with autocrafting.
-3. Prepare at least two providers that can craft the same output:
-   - one high-priority provider
-   - one lower-priority provider
-4. For ExtendedAE-enabled scenarios, add an Assembler Matrix setup with valid patterns.
+1. Install ExtendedAE (required) along with AE2 (loaded transitively) for the target loader/version line.
+2. Start a new test world with both mods installed and available.
+3. Build a minimal ME network with autocrafting.
+4. Prepare at least two providers that can craft the same output:
+   - one high-priority Assembler Matrix
+   - one lower-priority Pattern Provider
+5. Add an Assembler Matrix setup with valid patterns.
 
 ## Functional Checks
 
 ### F1. AE2 Pattern Provider Priority
 
-Steps:
-1. Open provider priority UI and assign distinct priorities (example: 100 and 10).
-2. Request an item both providers can craft.
-3. Observe provider usage order.
-
-Expected:
-- Higher priority provider is selected first.
-- If top provider cannot satisfy full amount, lower priority provider is used for remainder.
-- Priority screen title shows crafting-priority wording.
-
-Failure signals:
-- Equal/undefined selection despite different priorities with both providers capable.
-- Planner stops instead of continuing to lower-priority provider.
-- Priority UI cannot open from provider screen.
+> **Out of scope for this MOD.** F1 is native AE2 behavior and is not a required check in any
+> release scenario for Assembler Matrix Prioritization.
 
 ### F2. ExtendedAE Assembler Matrix Priority Behavior
 
@@ -123,8 +117,58 @@ Failure signals:
 - open-screen handling errors, GUI freeze, or immediate client crash.
 - Priority button disappears, is inverted, or is not interactable.
 
+## Cross-Type Priority Test Scenarios
+
+These scenarios validate cross-type priority selection and fallback when a Matrix Assembler
+and a Pattern Provider can both produce the same output.
+
+Applies to: B-NF-211, B-FG-201
+
+### T-CROSSTYPE-1: Priority Selection — Matrix Assembler vs Pattern Provider
+
+Setup:
+- Matrix Assembler (priority = 100): produces Iron Ingot
+- Pattern Provider (priority = 0, default): Crafting Pattern — 9x Iron Nuggets → Iron Ingot
+- ME network contains inputs for both providers
+
+Steps:
+1. Order 1x Iron Ingot.
+2. Confirm Matrix Assembler was used (higher priority).
+3. Remove Matrix Assembler inputs from the network.
+4. Order 1x Iron Ingot again.
+5. Confirm Pattern Provider was used as fallback.
+
+Expected:
+- Step 2: Matrix Assembler (higher priority) is selected.
+- Step 5: Pattern Provider (lower priority) is used as fallback when Assembler cannot satisfy.
+
+Failure signals:
+- Pattern Provider selected when Matrix Assembler can satisfy (priority ignored).
+- Crafting fails when Assembler inputs are absent (no fallback to Pattern Provider).
+
+### T-CROSSTYPE-2: Partial Fallback — Matrix Assembler Insufficient Stock
+
+Setup:
+- Matrix Assembler (priority = 100): produces Iron Ingot; inputs for only 1 unit available.
+- Pattern Provider (priority = 0): Crafting Pattern — 9x Iron Nuggets → Iron Ingot; 18+ Iron Nuggets in stock.
+
+Steps:
+1. Order 3x Iron Ingot.
+2. Inspect the crafting plan: confirm Matrix Assembler is assigned 1 unit and Pattern Provider is assigned 2 units.
+3. Start crafting and confirm 3x Iron Ingot produced.
+
+Expected:
+- Crafting plan splits: Matrix Assembler handles 1x, Pattern Provider handles 2x.
+- Combined result: 3x Iron Ingot completed.
+
+Failure signals:
+- Crafting plan assigns all 3 to Matrix Assembler and fails (no fallback split).
+- Crafting plan assigns all 3 to Pattern Provider (priority ignored).
+- Planning error or planner collapse when both providers are available but Assembler is insufficient alone.
+
 ## Exit Criteria
 
-- All applicable scenarios from the official AE2 matrix pass.
+- Both scenarios pass: B-NF-211, B-FG-201.
 - No critical crash in client logs during scenario execution.
 - Priority behavior is consistent with provider-level priority semantics across loaders.
+- T-CROSSTYPE-1 and T-CROSSTYPE-2 pass on B-NF-211, B-FG-201.

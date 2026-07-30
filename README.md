@@ -1,77 +1,84 @@
-* Japanese desciption is in below
-* Other languages are in [docs/](docs/) directory. Machine translated.
+# Assembler Matrix Prioritization
 
-# AE2: Improved Crafting Prioritization
-This improves provider-level crafting priority behavior for ME Pattern Provider.
+## English
 
-## Dependencies MODs
-### Required
-- [https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2](Applied Energistics 2)
-### Optional
-- [https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider](ExtendedAE)
+**Assembler Matrix Prioritization** adds a priority setting to the Assembler Matrix from ExtendedAE, using the same UI as the ME Storage Bus. Higher numbers mean higher priority (default: 0).
 
-## Function 1: Improve ingredients resolving
-### AE2 behavior
-- You can register multiple recipes for same output. Like `8x Oak Planks -> Chest` and `8x Cherry Planks -> Chest`.
-- If you put 1 as crafting priority on the ME Pattern Provider for the Oak Planks recipe, and you put 2 for the Cherry Planks recipe, your autocrafting system sees **Cherry Planks first**, then Oak Planks.
+When multiple providers can craft the same item, the one with the highest priority is used first. If it cannot fully satisfy the request, lower-priority providers fill the remainder.
 
-| Stocked qty<br>of Oak Plank | Stocked qty<br>of Cherry Plank | Ordered | Crafting Work |
-| --- | --- | --- | --- |
-|  8 |  0 | 1x Chest | Works with 8x Oak Planks |
-|  0 | 24 | 3x Chest | Works with 24x Cherry Planks |
-|  8 | 16 | 3x Chest | :no_entry: **Missing ingredients!**<br>Needs 8x more Cherry Planks |
+### Dependencies
 
-### This MOD's behavior
-This mod solves this situation. You will be able to order 3 Chests with 8x Oak Planks and 16x Cherry Planks.
-#### MOD Creator's scenario
-- Ordering a bunch of Iron Ingots or Osumium Ingots on **Mekanism**. Also having **Mystical Agriculture**.
-- I would put higher priority for the Crafting Pattern with Essence, and lower priority for the Smelting Pattern with dusts.
+- **Required**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
+- **Optional**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2) (loaded transitively via ExtendedAE)
 
-## Function 2: Matrix Assembler is having priority
-### ExtendedAE behavior
-The Matrix Assembler from ExtendedAE doesn't have prioritize menu.
-### This MOD's behavior
-Now, it is having.
-#### MOD Creator's scenario
-Yes I love Matrix Assembler and I put many recipes into it. I don't care details. Put 1000 priority for those.
-- Same thing I wrote in avobe should work fine. Essence vs smelting Dusts.
-- Also works for Certus Quartz. Use Essence first. Then run the loop with Crusher and Reaction Chamber for the rest.
+### Feature
+
+Adds a priority configuration screen to the Assembler Matrix. Open the Assembler Matrix UI and click the priority button (top-right) to set the priority value.
 
 ---
 
-# AE Improved Crafting Prioritization
-これは AE2 向けのアドオン MOD です。
-MEパターンプロバイダー に対する、プロバイダー単位のクラフト優先度の挙動を改善します。
+## 日本語
 
-## 前提MOD
-### 必須
-- [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2)
-### 任意
-- [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
+**Assembler Matrix Prioritization** は、ExtendedAE の組立マトリックスに優先度設定を追加します。ME ストレージバスと同じ UI で優先度を設定できます（数値が大きいほど優先度が高く、デフォルトは 0）。
 
-## 機能 1: 素材解決の改善
-### AE2 の挙動
-- 同じ出力に対して複数レシピを登録できます。例: `8x オークの板材 -> チェスト` と `8x サクラの板材 -> チェスト`。
-- オークの板材レシピのMEパターンプロバイダーにクラフト優先度 1、サクラの板材レシピに 2 を設定すると、オートクラフトは **サクラの板材を先に** 確認します。その後にオークの板材を見ます。
+同じアイテムを複数のプロバイダーがクラフトできる場合、優先度の高い方が先に使用されます。素材が不足している場合は、低優先度のプロバイダーにフォールバックします。
 
-| オークの板材<br>の在庫数 | サクラの板材<br>の在庫数 | 注文 | クラフト結果 |
-| --- | --- | --- | --- |
-|  8 |  0 | 1x チェスト | 8x オークの板材 でクラフト可能 |
-|  0 | 24 | 3x チェスト | 24x サクラの板材 でクラフト可能 |
-|  8 | 16 | 3x チェスト | :no_entry: **素材不足!**<br>サクラの板材 がさらに 8x 必要 |
+### 前提 MOD
 
-### この MOD の挙動
-この MOD はこの状況を解決します。8x オークの板材 と 16x サクラの板材 を使った 3 個の チェスト 発注が可能になります。
-#### MOD 制作者の想定シナリオ
-- **Mystical Agriculture**導入環境で、鉄インゴットやオスミウムインゴットを大量注文する場合
-- エッセンスを使うクラフトパターンを高優先度に、ダストを使う精錬パターンを低優先度に設定しておけば、可能な限りエッセンスでのクラフトをする
+- **必須**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
+- **任意**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2)（ExtendedAE 経由で間接的に必要）
 
-## 機能 2: 組立マトリックス の優先度対応
-### ExtendedAE の挙動
-ExtendedAE の 組立マトリックス には優先度メニューがありません。
-### この MOD の挙動
-この MOD で優先度を設定できるようになります。
-#### MOD 制作者の想定シナリオ
-組立マトリックスにとにかくレシピを突っ込んで、優先度は適当に1000とかにしておく。
-- 上で書いたエッセンスと精錬の使い分けも問題なく動作します。
-- ケルタスクォーツでも有効。まずある限りのエッセンスを使い、残りは粉砕機とリアクションチャンバーのループで増殖させる。
+### 機能
+
+組立マトリックスに優先度設定画面を追加します。組立マトリックスの UI を開き、右上の優先度ボタンをクリックして値を設定してください。
+
+---
+
+## 한국어
+
+**Assembler Matrix Prioritization**은 ExtendedAE의 조합 매트릭스에 우선순위 설정 기능을 추가합니다. ME 저장 버스와 동일한 UI를 사용하며, 숫자가 클수록 우선순위가 높습니다(기본값: 0).
+
+여러 공급자가 동일한 아이템을 제작할 수 있을 때, 우선순위가 높은 공급자가 먼저 사용됩니다. 재료가 부족한 경우 낮은 우선순위의 공급자로 폴백됩니다.
+
+### 의존 모드
+
+- **필수**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
+- **선택**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2) (ExtendedAE를 통해 간접적으로 필요)
+
+### 기능
+
+조합 매트릭스에 우선순위 설정 화면을 추가합니다. 조합 매트릭스 UI를 열고 오른쪽 상단의 우선순위 버튼을 클릭하여 값을 설정하세요.
+
+---
+
+## 繁體中文
+
+**Assembler Matrix Prioritization** 為 ExtendedAE 的裝配矩陣新增優先度設定功能，使用與 ME 儲存匯流排相同的介面。數值越大優先度越高（預設值：0）。
+
+當多個提供者能夠合成同一物品時，優先度較高者會優先被使用。若材料不足，則會向優先度較低的提供者回退。
+
+### 依賴模組
+
+- **必要**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
+- **可選**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2)（透過 ExtendedAE 間接需要）
+
+### 功能
+
+為裝配矩陣新增優先度設定畫面。開啟裝配矩陣介面，點擊右上角的優先度按鈕即可設定數值。
+
+---
+
+## 简体中文
+
+**Assembler Matrix Prioritization** 为 ExtendedAE 的装配矩阵添加优先级设置功能，使用与 ME 存储总线相同的界面。数值越大优先级越高（默认值：0）。
+
+当多个提供者能够合成同一物品时，优先级较高的提供者会被优先使用。若材料不足，则会回退至优先级较低的提供者。
+
+### 依赖模组
+
+- **必须**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
+- **可选**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2)（通过 ExtendedAE 间接需要）
+
+### 功能
+
+为装配矩阵添加优先级设置界面。打开装配矩阵 UI，点击右上角的优先级按钮即可设置数值。

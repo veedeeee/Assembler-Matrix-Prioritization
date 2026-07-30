@@ -34,7 +34,7 @@ repositories {
 }
 
 base {
-    archivesName = "${mod_name}-forge-${forgeMinecraftVersion}"
+    archivesName = "${archives_name}-forge-${forgeMinecraftVersion}"
 }
 
 mixin {

@@ -16,7 +16,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "wtf.vd.meprioritizecraft.AeImprovedCraftingPrioritizationFabric"
+      "wtf.vd.assemblermatrix_prioritization.AeImprovedCraftingPrioritizationFabric"
     ]
   },
   "mixins": [
