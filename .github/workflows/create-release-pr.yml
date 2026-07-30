@@ -1,9 +1,18 @@
-name: Create Release PR
+name: Create PR to Master
 
 on:
-  push:
-    branches:
-      - 'release/**'
+  workflow_dispatch:
+    inputs:
+      head:
+        description: 'Source branch (head)'
+        required: true
+      title:
+        description: 'PR title'
+        required: true
+      body:
+        description: 'PR body (markdown)'
+        required: false
+        default: ':dependabot: This PR was prepared by GitHub Copilot'
 
 permissions:
   contents: read
@@ -13,40 +22,37 @@ jobs:
   create-pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Create release PR to master
+      - name: Create PR as github-actions[bot]
         uses: actions/github-script@v8
+        env:
+          PR_HEAD: ${{ inputs.head }}
+          PR_TITLE: ${{ inputs.title }}
+          PR_BODY: ${{ inputs.body }}
         with:
           script: |
-            const head = context.ref.replace('refs/heads/', '');
-            const version = head.replace('release/', '');
+            const head = process.env.PR_HEAD;
+            const title = process.env.PR_TITLE;
+            const body = process.env.PR_BODY || ':dependabot: This PR was prepared by GitHub Copilot';
+            const base = 'master';
 
             const { data: prs } = await github.rest.pulls.list({
               owner: context.repo.owner,
               repo: context.repo.repo,
               state: 'open',
               head: `${context.repo.owner}:${head}`,
-              base: 'master',
+              base,
             });
-
             if (prs.length > 0) {
-              core.info(`PR already exists: #${prs[0].number}`);
+              core.info(`PR already exists: #${prs[0].number} - ${prs[0].html_url}`);
               return;
             }
 
             const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `Release ${version}`,
-              head: head,
-              base: 'master',
-              body: [
-                `## Release ${version}`,
-                '',
-                'This PR was created automatically by the release branch push workflow.',
-                'Please review the changes and approve to trigger the release.',
-                '',
-                ':dependabot: This PR was prepared by GitHub Copilot',
-              ].join('\n'),
+              title,
+              head,
+              base,
+              body,
             });
-
             core.info(`Created PR: #${pr.number} - ${pr.html_url}`);
