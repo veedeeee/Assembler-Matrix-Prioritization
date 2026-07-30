@@ -1,10 +1,10 @@
 ---
 navigation:
-  title: AE Improved Crafting Prioritization
+  title: Assembler Matrix Prioritization
   icon: ae2:pattern_provider
 ---
 
-# AE Improved Crafting Prioritization
+# Assembler Matrix Prioritization
 
 このガイドでは、AE2のパターンプロバイダーとExtendedAEのAssembler Matrixに対する、プロバイダー単位のクラフト優先度機能を説明します。
 

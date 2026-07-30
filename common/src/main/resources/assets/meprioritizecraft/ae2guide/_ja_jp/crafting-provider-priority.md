@@ -7,7 +7,7 @@ navigation:
 
 # クラフトプロバイダー優先度
 
-AE2: Improved Crafting Prioritization は、AE2方式のプロバイダー優先度をクラフトプロバイダーに適用します。
+Assembler Matrix Prioritization は、AE2方式のプロバイダー優先度をクラフトプロバイダーに適用します。
 
 対象:
 - AE2のPattern Provider

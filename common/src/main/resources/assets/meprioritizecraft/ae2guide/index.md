@@ -1,10 +1,10 @@
 ---
 navigation:
-  title: AE Improved Crafting Prioritization
+  title: Assembler Matrix Prioritization
   icon: ae2:pattern_provider
 ---
 
-# AE Improved Crafting Prioritization
+# Assembler Matrix Prioritization
 
 This guide explains provider-level crafting priorities for AE2 Pattern Providers and the ExtendedAE Assembler Matrix.
 
