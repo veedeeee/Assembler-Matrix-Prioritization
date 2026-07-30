@@ -11,6 +11,11 @@ When multiple providers can craft the same item, the one with the highest priori
 - **Required**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
 - **Optional**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2) (loaded transitively via ExtendedAE)
 
+### Supported Loaders
+
+- NeoForge 1.21.1
+- Forge 1.20.1
+
 ### Feature
 
 Adds a priority configuration screen to the Assembler Matrix. Open the Assembler Matrix UI and click the priority button (top-right) to set the priority value.
@@ -27,6 +32,11 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 
 - **必須**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
 - **任意**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2)（ExtendedAE 経由で間接的に必要）
+
+### 対応ローダー
+
+- NeoForge 1.21.1
+- Forge 1.20.1
 
 ### 機能
 
@@ -45,6 +55,11 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 - **필수**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
 - **선택**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2) (ExtendedAE를 통해 간접적으로 필요)
 
+### 지원 로더
+
+- NeoForge 1.21.1
+- Forge 1.20.1
+
 ### 기능
 
 조합 매트릭스에 우선순위 설정 화면을 추가합니다. 조합 매트릭스 UI를 열고 오른쪽 상단의 우선순위 버튼을 클릭하여 값을 설정하세요.
@@ -62,6 +77,11 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 - **必要**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
 - **可選**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2)（透過 ExtendedAE 間接需要）
 
+### 支援載入器
+
+- NeoForge 1.21.1
+- Forge 1.20.1
+
 ### 功能
 
 為裝配矩陣新增優先度設定畫面。開啟裝配矩陣介面，點擊右上角的優先度按鈕即可設定數值。
@@ -78,6 +98,11 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 
 - **必须**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
 - **可选**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2)（通过 ExtendedAE 间接需要）
+
+### 支持加载器
+
+- NeoForge 1.21.1
+- Forge 1.20.1
 
 ### 功能
 

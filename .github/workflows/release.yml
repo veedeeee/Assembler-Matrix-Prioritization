@@ -46,7 +46,7 @@ jobs:
         if: steps.tag_check.outputs.exists == 'false'
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build all loaders
+      - name: Build supported loaders
         if: steps.tag_check.outputs.exists == 'false'
         run: ./gradlew build --console=plain
 
@@ -56,7 +56,7 @@ jobs:
         run: |
           mkdir -p release-jars
           # Exclude *-sources and *-dev jars
-          find neoforge/build/libs forge/build/libs fabric/build/libs \
+          find neoforge/build/libs forge/build/libs \
             -name "*.jar" ! -name "*-sources*" ! -name "*-dev*" \
             -exec cp {} release-jars/ \;
 

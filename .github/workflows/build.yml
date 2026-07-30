@@ -29,7 +29,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build all loaders
+      - name: Build supported loaders
         run: ./gradlew build --console=plain
 
       - name: Upload NeoForge artifact
@@ -43,9 +43,3 @@ jobs:
         with:
           name: forge-jars
           path: forge/build/libs/*.jar
-
-      - name: Upload Fabric artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: fabric-jars
-          path: fabric/build/libs/*.jar
