@@ -9,6 +9,7 @@ This document defines release-readiness test scenarios for **Assembler Matrix Pr
 - `Applied Energistics 2` is loaded transitively via ExtendedAE.
 - F1 (AE2 Pattern Provider Priority) is native AE2 behavior and is **out of scope** for this MOD.
 - All scenarios in this document assume ExtendedAE is installed and active.
+- **Fabric is out of scope**: ExtendedAE does not implement Assembler Matrix on Fabric. No Fabric scenarios are included.
 
 ## Dependency Mod Requirements
 
@@ -54,7 +55,7 @@ Coordinates to be determined.
 Current official AE2 downloads expose these relevant lines:
 
 - `1.21.1`: NeoForge
-- `1.20.1`: Forge / Fabric
+- `1.20.1`: Forge / ~~Fabric~~ (Fabric is out of scope for this MOD)
 
 The previous `1.21`-based matrix is aborted because it does not match the official AE2 requirement set.
 
@@ -64,7 +65,6 @@ The previous `1.21`-based matrix is aborted because it does not match the offici
 | --- | --- | --- | --- |
 | B-NF-211 | 1.21.1 | NeoForge | F2, F3, T-CROSSTYPE-1, T-CROSSTYPE-2 |
 | B-FG-201 | 1.20.1 | Forge | F2, F3, T-CROSSTYPE-1, T-CROSSTYPE-2 |
-| B-FB-211 | 1.21.1 | Fabric | F2, F3, T-CROSSTYPE-1, T-CROSSTYPE-2 |
 
 ## Common Setup
 
@@ -122,7 +122,7 @@ Failure signals:
 These scenarios validate cross-type priority selection and fallback when a Matrix Assembler
 and a Pattern Provider can both produce the same output.
 
-Applies to: B-NF-211, B-FG-201, B-FB-211
+Applies to: B-NF-211, B-FG-201
 
 ### T-CROSSTYPE-1: Priority Selection — Matrix Assembler vs Pattern Provider
 
@@ -168,7 +168,7 @@ Failure signals:
 
 ## Exit Criteria
 
-- All three scenarios pass: B-NF-211, B-FG-201, B-FB-211.
+- Both scenarios pass: B-NF-211, B-FG-201.
 - No critical crash in client logs during scenario execution.
 - Priority behavior is consistent with provider-level priority semantics across loaders.
-- T-CROSSTYPE-1 and T-CROSSTYPE-2 pass on B-NF-211, B-FG-201, B-FB-211.
+- T-CROSSTYPE-1 and T-CROSSTYPE-2 pass on B-NF-211, B-FG-201.
