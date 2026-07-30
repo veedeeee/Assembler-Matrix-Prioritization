@@ -1,4 +1,4 @@
-package wtf.vd.meprioritizecraft.mixin;
+package wtf.vd.assemblermatrix_prioritization.mixin;
 
 import appeng.client.gui.AEBaseScreen;
 import appeng.client.gui.style.WidgetStyle;
@@ -13,9 +13,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class AssemblerMatrixScreenMixin {
 
     @Inject(method = "<init>", at = @At("TAIL"), require = 0)
-    private void meprioritizecraft$addPriorityButton(CallbackInfo ci) {
+    private void assemblermatrix_prioritization$addPriorityButton(CallbackInfo ci) {
         var style = ((AEBaseScreen<?>) (Object) this).getStyle();
-        var widgetMap = ((ScreenStyleAccessor) style).meprioritizecraft$getWidgetMap();
+        var widgetMap = ((ScreenStyleAccessor) style).assemblermatrix_prioritization$getWidgetMap();
         if (!widgetMap.containsKey("openPriority")) {
             // ExtendedAE's assembler_matrix.json does not define the openPriority widget.
             // Inject the widget position here so addOpenPriorityButton() can resolve it.
@@ -26,7 +26,7 @@ public abstract class AssemblerMatrixScreenMixin {
             ws.setHeight(20);
             widgetMap.put("openPriority", ws);
         }
-        ((AEBaseScreenAccessor) this).meprioritizecraft$getWidgets().addOpenPriorityButton();
+        ((AEBaseScreenAccessor) this).assemblermatrix_prioritization$getWidgets().addOpenPriorityButton();
     }
 }
 

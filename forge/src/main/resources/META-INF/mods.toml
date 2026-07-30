@@ -32,7 +32,7 @@ versionRange = "*"
 ordering = "AFTER"
 side = "BOTH"
 [[dependencies."${mod_id}"]]
-modId = "extendedae"
+modId = "expatternprovider"
 mandatory = true
 versionRange = "*"
 ordering = "AFTER"

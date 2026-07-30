@@ -1,4 +1,4 @@
-package wtf.vd.meprioritizecraft.mixin;
+package wtf.vd.assemblermatrix_prioritization.mixin;
 
 import net.minecraft.core.Holder;
 import net.minecraft.world.item.ItemStack;

@@ -1,4 +1,4 @@
-package wtf.vd.meprioritizecraft.mixin;
+package wtf.vd.assemblermatrix_prioritization.mixin;
 
 import appeng.client.gui.AEBaseScreen;
 import appeng.client.gui.WidgetContainer;
@@ -9,5 +9,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface AEBaseScreenAccessor {
 
     @Accessor("widgets")
-    WidgetContainer meprioritizecraft$getWidgets();
+    WidgetContainer assemblermatrix_prioritization$getWidgets();
 }
