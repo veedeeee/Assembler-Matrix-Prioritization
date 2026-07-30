@@ -60,6 +60,42 @@ jobs:
               state: 'closed',
             });
 
+  approve-release-to-master:
+    if: ${{ github.event.pull_request.base.ref == 'master' && startsWith(github.event.pull_request.head.ref, 'release/') && github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auto approve release to master PR
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const reviews = await github.paginate(github.rest.pulls.listReviews, {
+              owner,
+              repo,
+              pull_number: pr.number,
+              per_page: 100,
+            });
+
+            const alreadyApproved = reviews.some((review) =>
+              review.user?.login === 'github-actions[bot]' && review.state === 'APPROVED'
+            );
+
+            if (alreadyApproved) {
+              core.info('Approval already exists from github-actions[bot].');
+              return;
+            }
+
+            await github.rest.pulls.createReview({
+              owner,
+              repo,
+              pull_number: pr.number,
+              event: 'APPROVE',
+              body: 'Auto-approved by repository policy. This is an allowed release PR: `release/* -> master`.',
+            });
+
   approve-master-to-develop:
     if: ${{ github.event.pull_request.base.ref == 'develop' && github.event.pull_request.head.ref == 'master' && github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
