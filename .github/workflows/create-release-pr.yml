@@ -1,0 +1,52 @@
+name: Create Release PR
+
+on:
+  push:
+    branches:
+      - 'release/**'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create release PR to master
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const head = context.ref.replace('refs/heads/', '');
+            const version = head.replace('release/', '');
+
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              head: `${context.repo.owner}:${head}`,
+              base: 'master',
+            });
+
+            if (prs.length > 0) {
+              core.info(`PR already exists: #${prs[0].number}`);
+              return;
+            }
+
+            const { data: pr } = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Release ${version}`,
+              head: head,
+              base: 'master',
+              body: [
+                `## Release ${version}`,
+                '',
+                'This PR was created automatically by the release branch push workflow.',
+                'Please review the changes and approve to trigger the release.',
+                '',
+                ':dependabot: This PR was prepared by GitHub Copilot',
+              ].join('\n'),
+            });
+
+            core.info(`Created PR: #${pr.number} - ${pr.html_url}`);
