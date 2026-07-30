@@ -1,7 +1,7 @@
-package wtf.vd.meprioritizecraft.platform;
+package wtf.vd.assemblermatrix_prioritization.platform;
 
-import wtf.vd.meprioritizecraft.Constants;
-import wtf.vd.meprioritizecraft.platform.services.IPlatformHelper;
+import wtf.vd.assemblermatrix_prioritization.Constants;
+import wtf.vd.assemblermatrix_prioritization.platform.services.IPlatformHelper;
 
 import java.util.ServiceLoader;
 

@@ -1,4 +1,4 @@
-package wtf.vd.meprioritizecraft.mixin;
+package wtf.vd.assemblermatrix_prioritization.mixin;
 
 import appeng.api.networking.crafting.ICraftingProvider;
 import appeng.helpers.IPriorityHost;
@@ -13,69 +13,69 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import wtf.vd.meprioritizecraft.access.MatrixPriorityHost;
+import wtf.vd.assemblermatrix_prioritization.access.MatrixPriorityHost;
 
 @Pseudo
 @Mixin(targets = "com.glodblock.github.extendedae.common.tileentities.matrix.TileAssemblerMatrixBase", remap = false)
 public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost, MatrixPriorityHost {
 
     @Unique
-    private static final String MEPRIORITIZECRAFT_PRIORITY_TAG = "meprioritizecraft_priority";
+    private static final String MEPRIORITIZECRAFT_PRIORITY_TAG = "assemblermatrix_prioritization_priority";
 
     @Unique
-    private int meprioritizecraft$matrixPriority;
+    private int assemblermatrix_prioritization$matrixPriority;
 
     @Inject(method = "saveAdditional(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("TAIL"), require = 0)
-    private void meprioritizecraft$savePriorityLegacy(CompoundTag data, CallbackInfo ci) {
-        meprioritizecraft$writePriority(data);
+    private void assemblermatrix_prioritization$savePriorityLegacy(CompoundTag data, CallbackInfo ci) {
+        assemblermatrix_prioritization$writePriority(data);
     }
 
     @Inject(method = "loadTag(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("TAIL"), require = 0)
-    private void meprioritizecraft$loadPriorityLegacy(CompoundTag data, CallbackInfo ci) {
-        meprioritizecraft$readPriority(data);
+    private void assemblermatrix_prioritization$loadPriorityLegacy(CompoundTag data, CallbackInfo ci) {
+        assemblermatrix_prioritization$readPriority(data);
     }
 
     @Override
     public int getPriority() {
-        return this.meprioritizecraft$matrixPriority;
+        return this.assemblermatrix_prioritization$matrixPriority;
     }
 
     // ICraftingProvider.getPatternPriority() — not declared in this mixin's implements clause,
     // so @Override is intentionally omitted. Mixin merges this method into TileAssemblerMatrixBase
     // which does implement ICraftingProvider, wiring the priority into AE2's crafting planner.
     public int getPatternPriority() {
-        return this.meprioritizecraft$matrixPriority;
+        return this.assemblermatrix_prioritization$matrixPriority;
     }
 
     @Override
     public void setPriority(int priority) {
-        this.meprioritizecraft$setMatrixPriority(priority);
+        this.assemblermatrix_prioritization$setMatrixPriority(priority);
     }
 
     @Override
-    public int meprioritizecraft$getMatrixPriority() {
-        return this.meprioritizecraft$matrixPriority;
+    public int assemblermatrix_prioritization$getMatrixPriority() {
+        return this.assemblermatrix_prioritization$matrixPriority;
     }
 
     @Override
-    public void meprioritizecraft$setMatrixPriority(int priority) {
-        if (this.meprioritizecraft$matrixPriority == priority) {
+    public void assemblermatrix_prioritization$setMatrixPriority(int priority) {
+        if (this.assemblermatrix_prioritization$matrixPriority == priority) {
             return;
         }
 
-        this.meprioritizecraft$matrixPriority = priority;
-        meprioritizecraft$invokeNoArg(this, "saveChanges");
-        this.meprioritizecraft$syncClusterPriority(priority);
+        this.assemblermatrix_prioritization$matrixPriority = priority;
+        assemblermatrix_prioritization$invokeNoArg(this, "saveChanges");
+        this.assemblermatrix_prioritization$syncClusterPriority(priority);
     }
 
     @Override
-    public void meprioritizecraft$setMatrixPriorityFromCluster(int priority) {
-        if (this.meprioritizecraft$matrixPriority == priority) {
+    public void assemblermatrix_prioritization$setMatrixPriorityFromCluster(int priority) {
+        if (this.assemblermatrix_prioritization$matrixPriority == priority) {
             return;
         }
 
-        this.meprioritizecraft$matrixPriority = priority;
-        meprioritizecraft$invokeNoArg(this, "saveChanges");
+        this.assemblermatrix_prioritization$matrixPriority = priority;
+        assemblermatrix_prioritization$invokeNoArg(this, "saveChanges");
     }
 
     @Override
@@ -123,15 +123,15 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
     }
 
     @Unique
-    private void meprioritizecraft$syncClusterPriority(int priority) {
-        var cluster = meprioritizecraft$invokeNoArg((Object) this, "getCluster");
+    private void assemblermatrix_prioritization$syncClusterPriority(int priority) {
+        var cluster = assemblermatrix_prioritization$invokeNoArg((Object) this, "getCluster");
         if (cluster == null) {
             return;
         }
 
         // Propagate to all block entities in the cluster (Frame/Glass/Wall/Pattern/etc.)
         // so that whichever outer block the player right-clicks next shows the correct value.
-        var blockEntities = meprioritizecraft$invokeNoArg(cluster, "getBlockEntities");
+        var blockEntities = assemblermatrix_prioritization$invokeNoArg(cluster, "getBlockEntities");
         if (blockEntities instanceof java.util.Iterator<?> beIterator) {
             while (beIterator.hasNext()) {
                 var be = beIterator.next();
@@ -139,7 +139,7 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
                     continue; // already updated in setMatrixPriority
                 }
                 if (be instanceof MatrixPriorityHost host) {
-                    host.meprioritizecraft$setMatrixPriorityFromCluster(priority);
+                    host.assemblermatrix_prioritization$setMatrixPriorityFromCluster(priority);
                 }
             }
         } else if (blockEntities instanceof Iterable<?> beIterable) {
@@ -148,29 +148,29 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
                     continue; // already updated in setMatrixPriority
                 }
                 if (be instanceof MatrixPriorityHost host) {
-                    host.meprioritizecraft$setMatrixPriorityFromCluster(priority);
+                    host.assemblermatrix_prioritization$setMatrixPriorityFromCluster(priority);
                 }
             }
         }
 
         // Additionally trigger ICraftingProvider.requestUpdate on Pattern blocks so that
         // AE2's crafting planner re-reads the updated getPatternPriority() value.
-        var patterns = meprioritizecraft$invokeNoArg(cluster, "getPatterns");
+        var patterns = assemblermatrix_prioritization$invokeNoArg(cluster, "getPatterns");
         if (!(patterns instanceof Iterable<?> iterable)) {
             return;
         }
 
         for (var pattern : iterable) {
             if (pattern instanceof ICraftingProvider craftingProvider) {
-                meprioritizecraft$requestUpdate(craftingProvider, pattern);
+                assemblermatrix_prioritization$requestUpdate(craftingProvider, pattern);
             }
         }
     }
 
 
     @Unique
-    private static void meprioritizecraft$requestUpdate(ICraftingProvider craftingProvider, Object holder) {
-        var mainNode = meprioritizecraft$invokeNoArg(holder, "getMainNode");
+    private static void assemblermatrix_prioritization$requestUpdate(ICraftingProvider craftingProvider, Object holder) {
+        var mainNode = assemblermatrix_prioritization$invokeNoArg(holder, "getMainNode");
         if (mainNode == null) {
             return;
         }
@@ -191,7 +191,7 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
         throw new IllegalStateException("No requestUpdate(node) method found on ICraftingProvider");
     }
     @Unique
-    private static Object meprioritizecraft$invokeNoArg(Object target, String methodName) {
+    private static Object assemblermatrix_prioritization$invokeNoArg(Object target, String methodName) {
         try {
             var method = target.getClass().getMethod(methodName);
             return method.invoke(target);
@@ -201,7 +201,7 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
     }
 
     @Unique
-    private static void meprioritizecraft$invokeWriteInt(Object target, String key, int value) {
+    private static void assemblermatrix_prioritization$invokeWriteInt(Object target, String key, int value) {
         try {
             var method = target.getClass().getMethod("putInt", String.class, int.class);
             method.invoke(target, key, value);
@@ -211,7 +211,7 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
     }
 
     @Unique
-    private static int meprioritizecraft$invokeReadIntOr(Object target, String key, int fallback) {
+    private static int assemblermatrix_prioritization$invokeReadIntOr(Object target, String key, int fallback) {
         try {
             var method = target.getClass().getMethod("getIntOr", String.class, int.class);
             return (int) method.invoke(target, key, fallback);
@@ -228,12 +228,12 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
     }
 
     @Unique
-    private void meprioritizecraft$writePriority(CompoundTag data) {
-        meprioritizecraft$invokeWriteInt(data, MEPRIORITIZECRAFT_PRIORITY_TAG, this.meprioritizecraft$matrixPriority);
+    private void assemblermatrix_prioritization$writePriority(CompoundTag data) {
+        assemblermatrix_prioritization$invokeWriteInt(data, MEPRIORITIZECRAFT_PRIORITY_TAG, this.assemblermatrix_prioritization$matrixPriority);
     }
 
     @Unique
-    private void meprioritizecraft$readPriority(CompoundTag data) {
-        this.meprioritizecraft$matrixPriority = meprioritizecraft$invokeReadIntOr(data, MEPRIORITIZECRAFT_PRIORITY_TAG, 0);
+    private void assemblermatrix_prioritization$readPriority(CompoundTag data) {
+        this.assemblermatrix_prioritization$matrixPriority = assemblermatrix_prioritization$invokeReadIntOr(data, MEPRIORITIZECRAFT_PRIORITY_TAG, 0);
     }
 }

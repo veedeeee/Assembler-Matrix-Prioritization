@@ -1,4 +1,4 @@
-package wtf.vd.meprioritizecraft.mixin;
+package wtf.vd.assemblermatrix_prioritization.mixin;
 
 import appeng.client.gui.style.ScreenStyle;
 import appeng.client.gui.style.WidgetStyle;
@@ -11,5 +11,5 @@ import java.util.Map;
 public interface ScreenStyleAccessor {
 
     @Accessor("widgets")
-    Map<String, WidgetStyle> meprioritizecraft$getWidgetMap();
+    Map<String, WidgetStyle> assemblermatrix_prioritization$getWidgetMap();
 }

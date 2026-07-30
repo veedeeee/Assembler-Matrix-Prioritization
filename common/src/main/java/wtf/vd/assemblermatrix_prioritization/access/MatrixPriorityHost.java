@@ -1,10 +1,10 @@
-package wtf.vd.meprioritizecraft.access;
+package wtf.vd.assemblermatrix_prioritization.access;
 
 public interface MatrixPriorityHost {
 
-    int meprioritizecraft$getMatrixPriority();
+    int assemblermatrix_prioritization$getMatrixPriority();
 
-    void meprioritizecraft$setMatrixPriority(int priority);
+    void assemblermatrix_prioritization$setMatrixPriority(int priority);
 
-    void meprioritizecraft$setMatrixPriorityFromCluster(int priority);
+    void assemblermatrix_prioritization$setMatrixPriorityFromCluster(int priority);
 }

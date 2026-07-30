@@ -1,4 +1,4 @@
-package wtf.vd.meprioritizecraft;
+package wtf.vd.assemblermatrix_prioritization;
 
 import net.minecraftforge.fml.common.Mod;
 

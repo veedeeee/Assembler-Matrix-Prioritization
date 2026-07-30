@@ -1,4 +1,4 @@
-package wtf.vd.meprioritizecraft.platform.services;
+package wtf.vd.assemblermatrix_prioritization.platform.services;
 
 public interface IPlatformHelper {
 

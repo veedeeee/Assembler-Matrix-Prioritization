@@ -1,4 +1,4 @@
-package wtf.vd.meprioritizecraft;
+package wtf.vd.assemblermatrix_prioritization;
 
 public class CommonClass {
 

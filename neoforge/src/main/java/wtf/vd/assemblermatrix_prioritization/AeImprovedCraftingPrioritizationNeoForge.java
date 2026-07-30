@@ -1,4 +1,4 @@
-package wtf.vd.meprioritizecraft;
+package wtf.vd.assemblermatrix_prioritization;
 
 
 import net.neoforged.bus.api.IEventBus;

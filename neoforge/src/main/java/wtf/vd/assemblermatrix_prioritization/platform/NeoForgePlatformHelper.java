@@ -1,6 +1,6 @@
-package wtf.vd.meprioritizecraft.platform;
+package wtf.vd.assemblermatrix_prioritization.platform;
 
-import wtf.vd.meprioritizecraft.platform.services.IPlatformHelper;
+import wtf.vd.assemblermatrix_prioritization.platform.services.IPlatformHelper;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 
