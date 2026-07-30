@@ -132,7 +132,17 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
         // Propagate to all block entities in the cluster (Frame/Glass/Wall/Pattern/etc.)
         // so that whichever outer block the player right-clicks next shows the correct value.
         var blockEntities = meprioritizecraft$invokeNoArg(cluster, "getBlockEntities");
-        if (blockEntities instanceof Iterable<?> beIterable) {
+        if (blockEntities instanceof java.util.Iterator<?> beIterator) {
+            while (beIterator.hasNext()) {
+                var be = beIterator.next();
+                if (be == (Object) this) {
+                    continue; // already updated in setMatrixPriority
+                }
+                if (be instanceof MatrixPriorityHost host) {
+                    host.meprioritizecraft$setMatrixPriorityFromCluster(priority);
+                }
+            }
+        } else if (blockEntities instanceof Iterable<?> beIterable) {
             for (var be : beIterable) {
                 if (be == (Object) this) {
                     continue; // already updated in setMatrixPriority
@@ -227,4 +237,3 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
         this.meprioritizecraft$matrixPriority = meprioritizecraft$invokeReadIntOr(data, MEPRIORITIZECRAFT_PRIORITY_TAG, 0);
     }
 }
-
