@@ -1,9 +1,11 @@
-name: Create Release PR
+name: Create PR to Master
 
 on:
   push:
     branches:
       - 'release/**'
+      - 'fix/**'
+      - 'hotfix/**'
 
 permissions:
   contents: read
@@ -13,12 +15,17 @@ jobs:
   create-pr:
     runs-on: ubuntu-latest
     steps:
-      - name: Create release PR to master
+      - name: Create PR to master
         uses: actions/github-script@v8
         with:
           script: |
             const head = context.ref.replace('refs/heads/', '');
-            const version = head.replace('release/', '');
+
+            // Generate human-readable title from branch name
+            const suffix = head.replace(/^(release|fix|hotfix)\//, '');
+            const prefix = head.startsWith('release/') ? 'Release' :
+                           head.startsWith('hotfix/') ? 'Hotfix' : 'Fix';
+            const title = `${prefix}: ${suffix}`;
 
             const { data: prs } = await github.rest.pulls.list({
               owner: context.repo.owner,
@@ -36,14 +43,14 @@ jobs:
             const { data: pr } = await github.rest.pulls.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `Release ${version}`,
-              head: head,
+              title,
+              head,
               base: 'master',
               body: [
-                `## Release ${version}`,
+                `## ${title}`,
                 '',
-                'This PR was created automatically by the release branch push workflow.',
-                'Please review the changes and approve to trigger the release.',
+                'This PR was created automatically by the branch push workflow.',
+                'Please review the changes and approve to merge.',
                 '',
                 ':dependabot: This PR was prepared by GitHub Copilot',
               ].join('\n'),
