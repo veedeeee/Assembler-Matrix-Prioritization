@@ -10,7 +10,7 @@ Checklist for publishing Assembler Matrix Prioritization to CurseForge and Modri
 - [ ] All release tests pass (see `release-test-scenarios.md`)
   - [ ] B-NF-211 PASS
   - [ ] B-FG-201 PASS
-- [ ] MOD icon ready (256×256px, PNG, square)
+- [x] MOD icon ready — `images/mod_logo.png`
 - [ ] Changelog written
 
 ---
