@@ -47,6 +47,10 @@ jobs:
         if: steps.tag_check.outputs.exists == 'false'
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Make gradlew executable
+        if: steps.tag_check.outputs.exists == 'false'
+        run: chmod +x gradlew
+
       - name: Build all loaders
         if: steps.tag_check.outputs.exists == 'false'
         run: ./gradlew build --console=plain
