@@ -68,7 +68,7 @@ jobs:
               --repo ${{ github.repository }}
           else
             find neoforge/build/libs forge/build/libs \
-              -name "*.jar" ! -name "*-sources*" ! -name "*-dev*" \
+              -name "*.jar" ! -name "*-sources*" ! -name "*-dev*" ! -name "*-javadoc*" \
               -exec cp {} release-jars/ \;
           fi
 
@@ -83,23 +83,42 @@ jobs:
           files: release-jars/*.jar
           generate_release_notes: true
 
-      - name: Publish to CurseForge and Modrinth
+      - name: Publish NeoForge to CurseForge and Modrinth
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           curseforge-id: 1631512
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           modrinth-id: ${{ vars.MODRINTH_PROJECT_ID }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          files: release-jars/*.jar
+          files: release-jars/*neoforge*.jar
           name: ${{ steps.version.outputs.tag }}
-          version: ${{ steps.version.outputs.version }}
+          version: ${{ steps.version.outputs.version }}-neoforge
           version-type: release
-          loaders: |
-            neoforge
-            forge
-          game-versions: |
-            1.21.1
-            1.20.1
+          loaders: neoforge
+          game-versions: 1.21.1
+          environment: client-and-server
+          dependencies: |
+            ae2 | depends | modrinth:XxWD5pD3
+            ae2 | depends | curseforge:223794938
+          fail-mode: warn
+
+      - name: Publish Forge to CurseForge and Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: 1631512
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          modrinth-id: ${{ vars.MODRINTH_PROJECT_ID }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files: release-jars/*forge-1.20*.jar
+          name: ${{ steps.version.outputs.tag }}
+          version: ${{ steps.version.outputs.version }}-forge
+          version-type: release
+          loaders: forge
+          game-versions: 1.20.1
+          environment: client-and-server
+          dependencies: |
+            ae2 | depends | modrinth:XxWD5pD3
+            ae2 | depends | curseforge:223794938
           fail-mode: warn
 
       - name: Create master to develop sync PR
