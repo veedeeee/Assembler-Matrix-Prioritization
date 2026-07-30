@@ -96,7 +96,7 @@ jobs:
           version-type: release
           loaders: neoforge
           game-versions: 1.21.1
-          environment: client-and-server
+          environment: client | server
           dependencies: |
             ae2 | depends | modrinth:XxWD5pD3
             ae2 | depends | curseforge:223794938
@@ -115,7 +115,7 @@ jobs:
           version-type: release
           loaders: forge
           game-versions: 1.20.1
-          environment: client-and-server
+          environment: client | server
           dependencies: |
             ae2 | depends | modrinth:XxWD5pD3
             ae2 | depends | curseforge:223794938
