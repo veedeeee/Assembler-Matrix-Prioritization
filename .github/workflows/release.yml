@@ -97,9 +97,7 @@ jobs:
           loaders: neoforge
           game-versions: 1.21.1
           environment: client | server
-          dependencies: |
-            extended-ae | depends | modrinth:JiOqfoFM
-            extended-ae | depends | curseforge:892005
+          dependencies: extended-ae(required){modrinth:JiOqfoFM}{curseforge:892005}
           fail-mode: warn
 
       - name: Publish Forge to CurseForge and Modrinth
@@ -116,9 +114,7 @@ jobs:
           loaders: forge
           game-versions: 1.20.1
           environment: client | server
-          dependencies: |
-            extended-ae | depends | modrinth:JiOqfoFM
-            extended-ae | depends | curseforge:892005
+          dependencies: extended-ae(required){modrinth:JiOqfoFM}{curseforge:892005}
           fail-mode: warn
 
       - name: Create master to develop sync PR
