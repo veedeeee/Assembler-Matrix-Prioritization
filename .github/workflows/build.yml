@@ -1,10 +1,6 @@
 name: Build
 
 on:
-  push:
-    branches:
-      - develop
-      - 'release/**'
   pull_request:
     branches:
       - develop
@@ -15,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -29,7 +25,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Build supported loaders
+      - name: Build all loaders
         run: ./gradlew build --console=plain
 
       - name: Upload NeoForge artifact

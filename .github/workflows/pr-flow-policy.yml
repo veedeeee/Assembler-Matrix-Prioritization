@@ -15,7 +15,7 @@ permissions:
 jobs:
   deny-develop-to-master:
     if: ${{ github.event.pull_request.base.ref == 'master' && github.event.pull_request.head.ref == 'develop' && github.event.pull_request.head.repo.full_name == github.repository }}
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Deny direct develop to master PR
         uses: actions/github-script@v8
@@ -62,7 +62,7 @@ jobs:
 
   approve-master-to-develop:
     if: ${{ github.event.pull_request.base.ref == 'develop' && github.event.pull_request.head.ref == 'master' && github.event.pull_request.head.repo.full_name == github.repository }}
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       - name: Auto approve master to develop PR
         uses: actions/github-script@v8
