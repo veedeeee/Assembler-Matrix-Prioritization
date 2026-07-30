@@ -1,37 +1,29 @@
 # Assembler Matrix Prioritization
 
+## Download Links
+- [GitHub Releases](/releases)
+- [CurseForge](https://www.curseforge.com/minecraft/mc-mods/assembler-matrix-prioritization)
+- [Modrinth](https://modrinth.com/project/assembler-matrix-prioritization)
+
 ## English
-
-**Assembler Matrix Prioritization** adds a priority setting to the Assembler Matrix from ExtendedAE, using the same UI as the ME Storage Bus. Higher numbers mean higher priority (default: 0).
-
-When multiple providers can craft the same item, the one with the highest priority is used first. If it cannot fully satisfy the request, lower-priority providers fill the remainder.
-
+**Assembler Matrix Prioritization** adds a crafting priority setting to the Assembler Matrix from ExtendedAE, using the same UI as the ME Pattern Provider. Higher numbers mean higher priority (default: 0).
 ### Dependencies
-
 - **Required**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
-- **Optional**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2) (loaded transitively via ExtendedAE)
-
 ### Supported Loaders
-
 - NeoForge 1.21.1
 - Forge 1.20.1
-
 ### Feature
-
 Adds a priority configuration screen to the Assembler Matrix. Open the Assembler Matrix UI and click the priority button (top-right) to set the priority value.
 
 ---
 
 ## 日本語
 
-**Assembler Matrix Prioritization** は、ExtendedAE の組立マトリックスに優先度設定を追加します。ME ストレージバスと同じ UI で優先度を設定できます（数値が大きいほど優先度が高く、デフォルトは 0）。
-
-同じアイテムを複数のプロバイダーがクラフトできる場合、優先度の高い方が先に使用されます。素材が不足している場合は、低優先度のプロバイダーにフォールバックします。
+**Assembler Matrix Prioritization** は、ExtendedAE の組立マトリックスにクラフト優先度設定を追加します。ME パターンプロバイダーと同じ UI を使用し、数値が大きいほど優先度が高くなります（デフォルト: 0）。
 
 ### 前提 MOD
 
 - **必須**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
-- **任意**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2)（ExtendedAE 経由で間接的に必要）
 
 ### 対応ローダー
 
@@ -46,14 +38,11 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 
 ## 한국어
 
-**Assembler Matrix Prioritization**은 ExtendedAE의 조합 매트릭스에 우선순위 설정 기능을 추가합니다. ME 저장 버스와 동일한 UI를 사용하며, 숫자가 클수록 우선순위가 높습니다(기본값: 0).
-
-여러 공급자가 동일한 아이템을 제작할 수 있을 때, 우선순위가 높은 공급자가 먼저 사용됩니다. 재료가 부족한 경우 낮은 우선순위의 공급자로 폴백됩니다.
+**Assembler Matrix Prioritization**은 ExtendedAE의 조합 매트릭스에 제작 우선순위 설정을 추가합니다. ME 패턴 제공자와 동일한 UI를 사용하며, 숫자가 클수록 우선순위가 높습니다(기본값: 0).
 
 ### 의존 모드
 
 - **필수**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
-- **선택**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2) (ExtendedAE를 통해 간접적으로 필요)
 
 ### 지원 로더
 
@@ -68,14 +57,11 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 
 ## 繁體中文
 
-**Assembler Matrix Prioritization** 為 ExtendedAE 的裝配矩陣新增優先度設定功能，使用與 ME 儲存匯流排相同的介面。數值越大優先度越高（預設值：0）。
-
-當多個提供者能夠合成同一物品時，優先度較高者會優先被使用。若材料不足，則會向優先度較低的提供者回退。
+**Assembler Matrix Prioritization** 為 ExtendedAE 的裝配矩陣新增合成優先度設定，使用與 ME 圖樣提供器相同的介面。數值越大優先度越高（預設值：0）。
 
 ### 依賴模組
 
 - **必要**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
-- **可選**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2)（透過 ExtendedAE 間接需要）
 
 ### 支援載入器
 
@@ -90,14 +76,11 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 
 ## 简体中文
 
-**Assembler Matrix Prioritization** 为 ExtendedAE 的装配矩阵添加优先级设置功能，使用与 ME 存储总线相同的界面。数值越大优先级越高（默认值：0）。
-
-当多个提供者能够合成同一物品时，优先级较高的提供者会被优先使用。若材料不足，则会回退至优先级较低的提供者。
+**Assembler Matrix Prioritization** 为 ExtendedAE 的装配矩阵添加合成优先级设置，使用与 ME 样板提供器相同的界面。数值越大优先级越高（默认值：0）。
 
 ### 依赖模组
 
 - **必须**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
-- **可选**: [Applied Energistics 2](https://www.curseforge.com/minecraft/mc-mods/applied-energistics-2)（通过 ExtendedAE 间接需要）
 
 ### 支持加载器
 
