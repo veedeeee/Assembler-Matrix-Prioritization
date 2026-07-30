@@ -55,4 +55,12 @@ jobs:
               base,
               body,
             });
+
+            await github.rest.pulls.requestReviewers({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              reviewers: [context.repo.owner],
+            });
+
             core.info(`Created PR: #${pr.number} - ${pr.html_url}`);
