@@ -10,7 +10,9 @@ public abstract class ItemStackJeiCompatMixin {
 
     /**
      * Compatibility bridge for older JEI builds that still call ItemStack#supportsEnchantment(Holder).
+     * This path still relies on Enchantment#canEnchant(ItemStack) for backward compatibility.
      */
+    @SuppressWarnings("deprecation")
     public boolean supportsEnchantment(Holder<Enchantment> enchantment) {
         return enchantment.value().canEnchant((ItemStack) (Object) this);
     }

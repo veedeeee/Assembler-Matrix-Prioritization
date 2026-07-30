@@ -4,3 +4,12 @@ plugins {
     // see https://projects.neoforged.net/neoforged/moddevgradle for new versions
     id 'net.neoforged.moddev' version '0.1.110' apply false
 }
+
+subprojects {
+    tasks.withType(JavaCompile).configureEach {
+        options.compilerArgs += ['-Xdoclint:none']
+    }
+    tasks.withType(Javadoc).configureEach {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
+}
