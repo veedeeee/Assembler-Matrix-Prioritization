@@ -5,7 +5,7 @@ plugins {
 }
 
 def forgeMinecraftVersion = '1.20.1'
-def forgeVersion = '47.4.22'
+def forgeVersion = '47.4.10'
 def forgeLoaderVersionRange = '[47,)'
 def forgeMinecraftVersionRange = '[1.20.1, 1.21)'
 
@@ -125,7 +125,6 @@ sourceSets.each {
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
 }
-
 
 
 
