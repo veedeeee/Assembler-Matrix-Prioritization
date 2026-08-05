@@ -1,3 +1,5 @@
+import org.gradle.api.attributes.java.TargetJvmVersion
+
 plugins {
     id 'java-library'
     id 'maven-publish'
@@ -7,8 +9,16 @@ base {
     archivesName = "${archives_name}-${project.name}-${minecraft_version}"
 }
 
+def effectiveJavaVersion = project.findProperty("${project.name}_java_version") ?: java_version
+
+configurations.configureEach {
+    if (canBeResolved && (name == 'compileClasspath' || name == 'runtimeClasspath' || name == 'annotationProcessor')) {
+        attributes.attribute(TargetJvmVersion.TARGET_JVM_VERSION_ATTRIBUTE, java_version.toInteger())
+    }
+}
+
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(java_version)
+    toolchain.languageVersion = JavaLanguageVersion.of(effectiveJavaVersion)
     withSourcesJar()
     withJavadocJar()
 }
@@ -103,7 +113,7 @@ processResources {
                        "forge_version"                : forge_version,
                        "forge_loader_version_range"   : forge_loader_version_range,
                        'credits'                      : credits,
-                       'java_version'                 : java_version]
+                       'java_version'                 : effectiveJavaVersion]
 
     filesMatching(['pack.mcmeta', 'fabric.mod.json', 'META-INF/mods.toml', 'META-INF/neoforge.mods.toml', '*.mixins.json']) {
         expand expandProps
