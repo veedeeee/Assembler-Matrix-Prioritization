@@ -36,6 +36,12 @@ jobs:
           name: neoforge-jars
           path: neoforge/build/libs/*.jar
 
+      - name: Upload NeoForge 26.1.2 artifact
+        uses: actions/upload-artifact@v7.0.1
+        with:
+          name: neoforge2612-jars
+          path: neoforge2612/build/libs/*.jar
+
       - name: Upload Forge artifact
         uses: actions/upload-artifact@v7.0.1
         with:

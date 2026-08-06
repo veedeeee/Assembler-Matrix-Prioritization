@@ -75,4 +75,5 @@ what to check/test, and when to close the client and report results back.
 
 ## Supported Loaders
 - NeoForge 1.21.1
+- NeoForge 26.1.2 (ExtendedAE alpha baseline)
 - Forge 1.20.1
