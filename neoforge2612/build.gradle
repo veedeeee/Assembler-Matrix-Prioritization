@@ -13,6 +13,10 @@ ext.minecraft_version_range = neoforge2612MinecraftVersionRange
 ext.neoforge_version = neoforge2612Version
 ext.neoforge_loader_version_range = neoforge2612LoaderVersionRange
 
+base {
+    archivesName = "${archives_name}-neoforge-${neoforge2612MinecraftVersion}"
+}
+
 neoForge {
     version = neoforge2612Version
     // Automatically enable neoforge AccessTransformers if the file exists

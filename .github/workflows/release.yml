@@ -107,7 +107,7 @@ jobs:
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           modrinth-id: ${{ vars.MODRINTH_PROJECT_ID }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          files: release-jars/*neoforge2612-26.1.2*.jar
+          files: release-jars/*neoforge-26.1.2*.jar
           name: ${{ steps.version.outputs.tag }}
           version: ${{ steps.version.outputs.version }}-neoforge-26.1.2
           version-type: release
