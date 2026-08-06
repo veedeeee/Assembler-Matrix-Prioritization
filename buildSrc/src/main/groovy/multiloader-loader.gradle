@@ -12,9 +12,11 @@ configurations {
 }
 
 dependencies {
-    compileOnly(project(':common')) {
-        capabilities {
-            requireCapability "$group:$mod_id"
+    if (project.name != 'neoforge2612') {
+        compileOnly(project(':common')) {
+            capabilities {
+                requireCapability "$group:$mod_id"
+            }
         }
     }
     commonJava project(path: ':common', configuration: 'commonJava')

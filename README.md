@@ -11,6 +11,7 @@
 - **Required**: [ExtendedAE](https://www.curseforge.com/minecraft/mc-mods/ex-pattern-provider)
 ### Supported Loaders
 - NeoForge 1.21.1
+- NeoForge 26.1.2 (ExtendedAE alpha baseline)
 - Forge 1.20.1
 ### Feature
 Adds a priority configuration screen to the Assembler Matrix. Open the Assembler Matrix UI and click the priority button (top-right) to set the priority value.
@@ -28,6 +29,7 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 ### 対応ローダー
 
 - NeoForge 1.21.1
+- NeoForge 26.1.2（ExtendedAE alpha ベースライン）
 - Forge 1.20.1
 
 ### 機能
@@ -47,6 +49,7 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 ### 지원 로더
 
 - NeoForge 1.21.1
+- NeoForge 26.1.2 (ExtendedAE alpha baseline)
 - Forge 1.20.1
 
 ### 기능
@@ -66,6 +69,7 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 ### 支援載入器
 
 - NeoForge 1.21.1
+- NeoForge 26.1.2（ExtendedAE alpha 基準）
 - Forge 1.20.1
 
 ### 功能
@@ -85,6 +89,7 @@ Adds a priority configuration screen to the Assembler Matrix. Open the Assembler
 ### 支持加载器
 
 - NeoForge 1.21.1
+- NeoForge 26.1.2（ExtendedAE alpha 基线）
 - Forge 1.20.1
 
 ### 功能

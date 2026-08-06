@@ -67,7 +67,7 @@ jobs:
               --pattern "*.jar" --dir release-jars \
               --repo ${{ github.repository }}
           else
-            find neoforge/build/libs forge/build/libs \
+            find neoforge/build/libs neoforge2612/build/libs forge/build/libs \
               -name "*.jar" ! -name "*-sources*" ! -name "*-dev*" ! -name "*-javadoc*" \
               -exec cp {} release-jars/ \;
           fi
@@ -83,19 +83,36 @@ jobs:
           files: release-jars/*.jar
           generate_release_notes: true
 
-      - name: Publish NeoForge to CurseForge and Modrinth
+      - name: Publish NeoForge 1.21.1 to CurseForge and Modrinth
         uses: Kir-Antipov/mc-publish@v3.3
         with:
           curseforge-id: 1631512
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
           modrinth-id: ${{ vars.MODRINTH_PROJECT_ID }}
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          files: release-jars/*neoforge*.jar
+          files: release-jars/*neoforge-1.21.1*.jar
           name: ${{ steps.version.outputs.tag }}
-          version: ${{ steps.version.outputs.version }}-neoforge
+          version: ${{ steps.version.outputs.version }}-neoforge-1.21.1
           version-type: release
           loaders: neoforge
           game-versions: 1.21.1
+          environment: client | server
+          dependencies: extended-ae(required){modrinth:JiOqfoFM}{curseforge:892005}
+          fail-mode: warn
+
+      - name: Publish NeoForge 26.1.2 to CurseForge and Modrinth
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          curseforge-id: 1631512
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          modrinth-id: ${{ vars.MODRINTH_PROJECT_ID }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files: release-jars/*neoforge-26.1.2*.jar
+          name: ${{ steps.version.outputs.tag }}
+          version: ${{ steps.version.outputs.version }}-neoforge-26.1.2
+          version-type: release
+          loaders: neoforge
+          game-versions: 26.1.2
           environment: client | server
           dependencies: extended-ae(required){modrinth:JiOqfoFM}{curseforge:892005}
           fail-mode: warn
