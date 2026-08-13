@@ -101,8 +101,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:${forgeMinecraftVersion}-${forgeVersion}"
     compileOnly "org.spongepowered:mixin:0.8.5"
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
-    compileOnly fg.deobf("appeng:appliedenergistics2-forge:15.4.10")
-    runtimeOnly fg.deobf("appeng:appliedenergistics2-forge:15.4.10")
+    implementation fg.deobf("appeng:appliedenergistics2-forge:15.4.10")
     runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:15.0.0.12")
     runtimeOnly fg.deobf("curse.maven:jade-324717:4573193")
     runtimeOnly fg.deobf("org.appliedenergistics:guideme:20.1.7")
@@ -126,7 +125,6 @@ sourceSets.each {
     it.output.resourcesDir = dir
     it.java.destinationDirectory = dir
 }
-
 
 
 
