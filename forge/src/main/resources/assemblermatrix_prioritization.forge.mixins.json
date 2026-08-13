@@ -3,7 +3,9 @@
   "minVersion": "0.8",
   "package": "wtf.vd.assemblermatrix_prioritization.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [],
+  "mixins": [
+    "AssemblerMatrixBasePrioritySaveMixin"
+  ],
   "client": [],
   "server": [],
   "injectors": {

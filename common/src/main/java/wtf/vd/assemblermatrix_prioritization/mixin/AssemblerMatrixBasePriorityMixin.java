@@ -3,16 +3,12 @@ package wtf.vd.assemblermatrix_prioritization.mixin;
 import appeng.api.networking.crafting.ICraftingProvider;
 import appeng.helpers.IPriorityHost;
 import appeng.menu.ISubMenu;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import wtf.vd.assemblermatrix_prioritization.access.MatrixPriorityHost;
 
 @Pseudo
@@ -20,20 +16,7 @@ import wtf.vd.assemblermatrix_prioritization.access.MatrixPriorityHost;
 public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost, MatrixPriorityHost {
 
     @Unique
-    private static final String MEPRIORITIZECRAFT_PRIORITY_TAG = "assemblermatrix_prioritization_priority";
-
-    @Unique
     private int assemblermatrix_prioritization$matrixPriority;
-
-    @Inject(method = "saveAdditional(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("TAIL"), require = 0)
-    private void assemblermatrix_prioritization$savePriorityLegacy(CompoundTag data, CallbackInfo ci) {
-        assemblermatrix_prioritization$writePriority(data);
-    }
-
-    @Inject(method = "loadTag(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("TAIL"), require = 0)
-    private void assemblermatrix_prioritization$loadPriorityLegacy(CompoundTag data, CallbackInfo ci) {
-        assemblermatrix_prioritization$readPriority(data);
-    }
 
     @Override
     public int getPriority() {
@@ -200,40 +183,4 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
         }
     }
 
-    @Unique
-    private static void assemblermatrix_prioritization$invokeWriteInt(Object target, String key, int value) {
-        try {
-            var method = target.getClass().getMethod("putInt", String.class, int.class);
-            method.invoke(target, key, value);
-        } catch (ReflectiveOperationException e) {
-            throw new IllegalStateException("Failed to write priority on " + target.getClass(), e);
-        }
-    }
-
-    @Unique
-    private static int assemblermatrix_prioritization$invokeReadIntOr(Object target, String key, int fallback) {
-        try {
-            var method = target.getClass().getMethod("getIntOr", String.class, int.class);
-            return (int) method.invoke(target, key, fallback);
-        } catch (NoSuchMethodException ignored) {
-            try {
-                var method = target.getClass().getMethod("getInt", String.class);
-                return (int) method.invoke(target, key);
-            } catch (ReflectiveOperationException e) {
-                throw new IllegalStateException("Failed to read priority on " + target.getClass(), e);
-            }
-        } catch (ReflectiveOperationException e) {
-            throw new IllegalStateException("Failed to read priority on " + target.getClass(), e);
-        }
-    }
-
-    @Unique
-    private void assemblermatrix_prioritization$writePriority(CompoundTag data) {
-        assemblermatrix_prioritization$invokeWriteInt(data, MEPRIORITIZECRAFT_PRIORITY_TAG, this.assemblermatrix_prioritization$matrixPriority);
-    }
-
-    @Unique
-    private void assemblermatrix_prioritization$readPriority(CompoundTag data) {
-        this.assemblermatrix_prioritization$matrixPriority = assemblermatrix_prioritization$invokeReadIntOr(data, MEPRIORITIZECRAFT_PRIORITY_TAG, 0);
-    }
 }
