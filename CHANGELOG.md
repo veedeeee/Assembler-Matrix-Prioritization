@@ -4,7 +4,7 @@ v1.0.4
 - NOTE: ExtendedAE for `26.1.2` is currently tracked via alpha baseline (`26.1.2-neoforge`) for local runtime validation.
 
 v1.0.3
-- FIX: Crush on Forge/1.20.1 because this mod is requesting `JAVA_18` even Minecraft 1.20.1 runs on `JAVA_17`
+- FIX: Crash on Forge/1.20.1 because this mod is requesting `JAVA_18` even Minecraft 1.20.1 runs on `JAVA_17`
 
 v1.0.2
 - MODIFY: Change the target of the version of Forge to `47.4.10` from `47.4.22`.
