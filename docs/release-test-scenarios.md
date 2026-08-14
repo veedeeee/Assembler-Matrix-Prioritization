@@ -50,6 +50,12 @@ The same loader-match requirement applies; do not reuse NeoForge IDs for other l
 
 Coordinates to be determined.
 
+### NeoForge 26.1.2
+
+ExtendedAE is currently tracked against the `26.1.2-neoforge` line as an alpha baseline.
+When validating B-NF-262, use the matching alpha artifact from that line and keep loader/game
+version alignment strict (`26.1.2` + `neoforge`).
+
 ## AE2 Requirement Snapshot
 
 Current official AE2 downloads expose these relevant lines:
@@ -64,6 +70,7 @@ The previous `1.21`-based matrix is aborted because it does not match the offici
 | Scenario ID | Minecraft | Loader | Required checks |
 | --- | --- | --- | --- |
 | B-NF-211 | 1.21.1 | NeoForge | F2, F3, T-CROSSTYPE-1, T-CROSSTYPE-2 |
+| B-NF-262 | 26.1.2 | NeoForge | F2, F3, T-CROSSTYPE-1, T-CROSSTYPE-2 |
 | B-FG-201 | 1.20.1 | Forge | F2, F3, T-CROSSTYPE-1, T-CROSSTYPE-2 |
 
 ## Common Setup
@@ -122,7 +129,7 @@ Failure signals:
 These scenarios validate cross-type priority selection and fallback when a Matrix Assembler
 and a Pattern Provider can both produce the same output.
 
-Applies to: B-NF-211, B-FG-201
+Applies to: B-NF-211, B-NF-262, B-FG-201
 
 ### T-CROSSTYPE-1: Priority Selection — Matrix Assembler vs Pattern Provider
 
@@ -168,7 +175,7 @@ Failure signals:
 
 ## Exit Criteria
 
-- Both scenarios pass: B-NF-211, B-FG-201.
+- All scenarios pass: B-NF-211, B-NF-262, B-FG-201.
 - No critical crash in client logs during scenario execution.
 - Priority behavior is consistent with provider-level priority semantics across loaders.
-- T-CROSSTYPE-1 and T-CROSSTYPE-2 pass on B-NF-211, B-FG-201.
+- T-CROSSTYPE-1 and T-CROSSTYPE-2 pass on B-NF-211, B-NF-262, B-FG-201.

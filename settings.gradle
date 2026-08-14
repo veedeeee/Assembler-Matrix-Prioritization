@@ -47,4 +47,5 @@ plugins {
 rootProject.name = 'Assembler-Matrix-Prioritization'
 include('common')
 include('neoforge')
+include('neoforge2612')
 include('forge')
