@@ -77,6 +77,23 @@ jobs:
         if: steps.tag_check.outputs.exists == 'false'
         run: ./gradlew build --console=plain
 
+      - name: Verify expected release jars
+        if: steps.tag_check.outputs.exists == 'false'
+        shell: bash
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          REQUIRED=(
+            "forge/build/libs/assembler-matrix-prioritization-forge-1.20.1-${VERSION}.jar"
+            "neoforge/build/libs/assembler-matrix-prioritization-neoforge-1.21.1-${VERSION}.jar"
+            "neoforge2612/build/libs/assembler-matrix-prioritization-neoforge-26.1.2-${VERSION}.jar"
+          )
+          for file in "${REQUIRED[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "Missing expected artifact: $file" >&2
+              exit 1
+            fi
+          done
+
       - name: Collect release jars
         shell: bash
         env:

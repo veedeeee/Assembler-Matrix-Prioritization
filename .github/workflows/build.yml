@@ -30,6 +30,22 @@ jobs:
       - name: Build all loaders
         run: ./gradlew build --console=plain
 
+      - name: Verify expected loader jars
+        shell: bash
+        run: |
+          VERSION=$(grep '^version=' gradle.properties | cut -d'=' -f2 | tr -d '[:space:]')
+          REQUIRED=(
+            "forge/build/libs/assembler-matrix-prioritization-forge-1.20.1-${VERSION}.jar"
+            "neoforge/build/libs/assembler-matrix-prioritization-neoforge-1.21.1-${VERSION}.jar"
+            "neoforge2612/build/libs/assembler-matrix-prioritization-neoforge-26.1.2-${VERSION}.jar"
+          )
+          for file in "${REQUIRED[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "Missing expected artifact: $file" >&2
+              exit 1
+            fi
+          done
+
       - name: Upload NeoForge artifact
         uses: actions/upload-artifact@v7.0.1
         with:
