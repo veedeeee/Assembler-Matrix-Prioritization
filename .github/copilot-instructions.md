@@ -62,12 +62,19 @@ what to check/test, and when to close the client and report results back.
 ## Release Flow (MOD-specific)
 - Version manifest: `gradle.properties` — update the `version=` field.
 - Build command before PR: `.\gradlew.bat build --console=plain`
-- Build modules: `common`, `forge`, `neoforge`
+- Build modules: `common`, `forge`, `neoforge`, `neoforge2612`
 - Artifact paths after build:
-  - NeoForge: `neoforge/build/libs/`
   - Forge: `forge/build/libs/`
-- Use **SKILL: create-pr-to-master** to open bot-authored PRs. The skill auto-detects this
-  repo via `gh repo view --json nameWithOwner` or `.agents/config/project.md`.
+  - NeoForge (1.21.1): `neoforge/build/libs/`
+  - NeoForge (26.1.2): `neoforge2612/build/libs/`
+- Branch flow: feature/fix branches merge into `develop` first. A `release/vX.Y.Z` branch is then
+  cut from `develop` for the version bump + changelog commit, and that branch is what gets PR'd
+  into `master`.
+- Use the **`.github/workflows/create-pr.yml`** workflow (`gh workflow run create-pr.yml -f
+  head=<branch> -f base=<target> -f title=<title> -f body=<body>`) to open bot-authored PRs
+  instead of `gh pr create`. `base` defaults to `master` but accepts any target branch (e.g.
+  `develop`), so the same workflow covers both release PRs and regular feature/fix PRs into
+  `develop`.
 
 ## Coding Conventions
 - Follow the `.editorconfig` file in this repository as the source of truth for code
