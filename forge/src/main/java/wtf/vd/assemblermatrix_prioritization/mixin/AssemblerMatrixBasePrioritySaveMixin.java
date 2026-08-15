@@ -15,7 +15,15 @@ public abstract class AssemblerMatrixBasePrioritySaveMixin {
 
     private static final String PRIORITY_TAG = "assemblermatrix_prioritization_priority";
 
-    @Inject(method = "saveAdditional(Lnet/minecraft/nbt/CompoundTag;)V", at = @At("TAIL"), require = 0)
+    // Try both the official name and the SRG (searge) name. ExtendedAE's published Forge
+    // 1.20.1 jar overrides vanilla BlockEntity#saveAdditional, and depending on how/when it was
+    // built, the override may still carry its SRG name (m_183515_) in the distributed bytecode
+    // instead of being deobfuscated to "saveAdditional". Since this is a @Pseudo mixin with
+    // remap=false, only a literal name match works, so both candidates are listed with require=0.
+    @Inject(method = {
+            "saveAdditional(Lnet/minecraft/nbt/CompoundTag;)V",
+            "m_183515_(Lnet/minecraft/nbt/CompoundTag;)V"
+    }, at = @At("TAIL"), require = 0)
     private void assemblermatrix_prioritization$savePriority(CompoundTag data, CallbackInfo ci) {
         int value = ((MatrixPriorityHost) this).assemblermatrix_prioritization$getMatrixPriority();
         Constants.LOG.info("[DEBUG-priority] (forge) savePriority: writing {} for {}", value, this.getClass().getName());
