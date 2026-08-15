@@ -181,29 +181,91 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            // NOTE: PRs/reviews created here use the default GITHUB_TOKEN, so this event does
+            // NOT trigger other workflows (e.g. pr-flow-policy.yml's approve-master-to-develop
+            // job) due to GitHub's loop-prevention rule for GITHUB_TOKEN-authored events.
+            // Approve + merge the sync PR directly in this same job instead of relying on that
+            // workflow to react to it.
             const { data: prs } = await github.rest.pulls.list({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              owner,
+              repo,
               state: 'open',
-              head: `${context.repo.owner}:master`,
+              head: `${owner}:master`,
               base: 'develop',
             });
+
+            let pr;
             if (prs.length > 0) {
-              core.info(`Sync PR already exists: #${prs[0].number}`);
+              pr = prs[0];
+              core.info(`Sync PR already exists: #${pr.number}`);
+            } else {
+              const { data: created } = await github.rest.pulls.create({
+                owner,
+                repo,
+                title: 'chore: sync master to develop',
+                head: 'master',
+                base: 'develop',
+                body: [
+                  '## Sync master → develop',
+                  '',
+                  'This PR was created automatically by the release workflow to sync master back to develop.',
+                  '',
+                  ':dependabot: This PR was prepared by GitHub Copilot',
+                ].join('\n'),
+              });
+              pr = created;
+              core.info(`Created sync PR: #${pr.number}`);
+            }
+
+            if (pr.draft) {
+              core.info('PR is draft. Skip auto approve/merge.');
               return;
             }
-            const { data: pr } = await github.rest.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: 'chore: sync master to develop',
-              head: 'master',
-              base: 'develop',
-              body: [
-                '## Sync master → develop',
-                '',
-                'This PR was created automatically by the release workflow to sync master back to develop.',
-                '',
-                ':dependabot: This PR was prepared by GitHub Copilot',
-              ].join('\n'),
+
+            const reviews = await github.paginate(github.rest.pulls.listReviews, {
+              owner,
+              repo,
+              pull_number: pr.number,
+              per_page: 100,
             });
-            core.info(`Created sync PR: #${pr.number}`);
+            const alreadyApproved = reviews.some((review) =>
+              review.user?.login === 'github-actions[bot]' && review.state === 'APPROVED'
+            );
+            if (!alreadyApproved) {
+              try {
+                await github.rest.pulls.createReview({
+                  owner,
+                  repo,
+                  pull_number: pr.number,
+                  event: 'APPROVE',
+                  body: [
+                    'Auto-approved by the release workflow.',
+                    '',
+                    '- This is an allowed synchronization PR: `master -> develop`.',
+                  ].join('\n'),
+                });
+              } catch (error) {
+                core.warning(`Failed to auto-approve PR: ${error.message}`);
+              }
+            }
+
+            const latest = await github.rest.pulls.get({ owner, repo, pull_number: pr.number });
+            if (latest.data.state !== 'open') {
+              core.info('PR is not open. Skip auto merge.');
+              return;
+            }
+
+            try {
+              await github.rest.pulls.merge({
+                owner,
+                repo,
+                pull_number: pr.number,
+                merge_method: 'merge',
+              });
+              core.info('PR merged automatically by the release workflow.');
+            } catch (error) {
+              core.setFailed(`Failed to auto-merge PR: ${error.message}`);
+            }
