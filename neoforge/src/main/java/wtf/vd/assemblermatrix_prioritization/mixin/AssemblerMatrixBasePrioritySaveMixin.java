@@ -19,13 +19,14 @@ public abstract class AssemblerMatrixBasePrioritySaveMixin {
     @Inject(method = "saveAdditional(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
             at = @At("TAIL"), require = 0)
     private void assemblermatrix_prioritization$savePriority(CompoundTag data, HolderLookup.Provider registries, CallbackInfo ci) {
-        data.putInt("assemblermatrix_prioritization_priority", ((MatrixPriorityHost) this).assemblermatrix_prioritization$getMatrixPriority());
+        int value = ((MatrixPriorityHost) this).assemblermatrix_prioritization$getMatrixPriority();
+        data.putInt("assemblermatrix_prioritization_priority", value);
     }
 
     @Inject(method = "loadTag(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
             at = @At("TAIL"), require = 0)
     private void assemblermatrix_prioritization$loadPriority(CompoundTag data, HolderLookup.Provider registries, CallbackInfo ci) {
-        ((MatrixPriorityHost) this).assemblermatrix_prioritization$setMatrixPriorityFromCluster(
-                data.getInt("assemblermatrix_prioritization_priority"));
+        int value = data.getInt("assemblermatrix_prioritization_priority");
+        ((MatrixPriorityHost) this).assemblermatrix_prioritization$setMatrixPriorityFromCluster(value);
     }
 }

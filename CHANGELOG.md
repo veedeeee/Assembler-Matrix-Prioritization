@@ -1,3 +1,8 @@
+v1.0.5
+- FIX: (Forge) Assembler Matrix priority was never saved on world/game exit on v1.0.4.
+- FIX: (NeoForge 26.1.2) Assembler Matrix priority was never saved or loaded at all because of the logic on ExtendedAE had been changed. Both of ExtendedAE and this mod on 26.1.2 is Alpha phase.
+- FIX: A crafting-provider update failure on one Assembler Matrix pattern block no longer blocks priority propagation to the other pattern blocks in the same cluster.
+
 v1.0.4
 - ADD: Added an additional NeoForge target for Minecraft `26.1.2` (`neoforge2612` module, NeoForge `26.1.2.94`) while keeping existing `1.21.1` NeoForge support.
 - MODIFY: Expanded CI/release automation to build and publish the new `26.1.2` NeoForge artifact in parallel with existing Forge/NeoForge outputs.

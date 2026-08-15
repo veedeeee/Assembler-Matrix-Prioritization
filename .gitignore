@@ -2,6 +2,7 @@
 # Gradle / Java (Minecraft mod: common/forge/fabric/neoforge/buildSrc)
 # --------------------------------------------------------------------------
 .gradle/
+.gradle-ci-probe/
 **/build/
 !src/**/build/
 out/

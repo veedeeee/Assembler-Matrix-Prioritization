@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Unique;
+import wtf.vd.assemblermatrix_prioritization.Constants;
 import wtf.vd.assemblermatrix_prioritization.access.MatrixPriorityHost;
 
 @Pseudo
@@ -24,8 +25,11 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
     }
 
     // ICraftingProvider.getPatternPriority() — not declared in this mixin's implements clause,
-    // so @Override is intentionally omitted. Mixin merges this method into TileAssemblerMatrixBase
-    // which does implement ICraftingProvider, wiring the priority into AE2's crafting planner.
+    // so @Override is intentionally omitted. Mixin merges this method into TileAssemblerMatrixBase.
+    // TileAssemblerMatrixBase itself does NOT implement ICraftingProvider; only the
+    // TileAssemblerMatrixPattern subclass does. Because Java resolves inherited concrete methods
+    // from the superclass ahead of interface defaults, this method still ends up satisfying
+    // ICraftingProvider.getPatternPriority() for TileAssemblerMatrixPattern instances.
     public int getPatternPriority() {
         return this.assemblermatrix_prioritization$matrixPriority;
     }
@@ -109,7 +113,7 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
     private void assemblermatrix_prioritization$syncClusterPriority(int priority) {
         var cluster = assemblermatrix_prioritization$invokeNoArg((Object) this, "getCluster");
         if (cluster == null) {
-            return;
+            return; // multiblock not formed yet
         }
 
         // Propagate to all block entities in the cluster (Frame/Glass/Wall/Pattern/etc.)
@@ -145,7 +149,14 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
 
         for (var pattern : iterable) {
             if (pattern instanceof ICraftingProvider craftingProvider) {
-                assemblermatrix_prioritization$requestUpdate(craftingProvider, pattern);
+                try {
+                    assemblermatrix_prioritization$requestUpdate(craftingProvider, pattern);
+                } catch (RuntimeException e) {
+                    // Do not let one failing pattern (e.g. not yet grid-connected) abort the
+                    // whole propagation loop for the remaining pattern blocks in the cluster.
+                    Constants.LOG.warn("Failed to request crafting update for pattern {} @ {}",
+                            pattern.getClass().getName(), assemblermatrix_prioritization$posOf(pattern), e);
+                }
             }
         }
     }
@@ -181,6 +192,14 @@ public abstract class AssemblerMatrixBasePriorityMixin implements IPriorityHost,
         } catch (ReflectiveOperationException e) {
             throw new IllegalStateException("Failed to invoke method " + methodName + " on " + target.getClass(), e);
         }
+    }
+
+    @Unique
+    private static String assemblermatrix_prioritization$posOf(Object target) {
+        if (target instanceof BlockEntity be) {
+            return String.valueOf(be.getBlockPos());
+        }
+        return "unknown-pos";
     }
 
 }
