@@ -1,7 +1,7 @@
 package wtf.vd.assemblermatrix_prioritization.mixin;
 
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
@@ -10,25 +10,27 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import wtf.vd.assemblermatrix_prioritization.Constants;
 import wtf.vd.assemblermatrix_prioritization.access.MatrixPriorityHost;
 
-// MC 1.21.1 changed BlockEntity.saveAdditional / loadTag to 2-param signatures.
-// This NeoForge-specific mixin handles persistence for ExtendedAE on NeoForge 1.21.1.
-// The common module retains the 1-param variant for Forge 1.20.1 compatibility.
+// NeoForge 26.1.2 replaced the CompoundTag-based BlockEntity.saveAdditional/loadTag signatures
+// with the ValueOutput/ValueInput codec API. This module-specific mixin handles persistence for
+// ExtendedAE on that line; the neoforge (1.21.1) module keeps the CompoundTag-based variant.
 @Pseudo
 @Mixin(targets = "com.glodblock.github.extendedae.common.tileentities.matrix.TileAssemblerMatrixBase", remap = false)
 public abstract class AssemblerMatrixBasePrioritySaveMixin {
 
-    @Inject(method = "saveAdditional(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+    private static final String PRIORITY_TAG = "assemblermatrix_prioritization_priority";
+
+    @Inject(method = "saveAdditional(Lnet/minecraft/world/level/storage/ValueOutput;)V",
             at = @At("TAIL"), require = 0)
-    private void assemblermatrix_prioritization$savePriority(CompoundTag data, HolderLookup.Provider registries, CallbackInfo ci) {
+    private void assemblermatrix_prioritization$savePriority(ValueOutput output, CallbackInfo ci) {
         int value = ((MatrixPriorityHost) this).assemblermatrix_prioritization$getMatrixPriority();
         Constants.LOG.info("[DEBUG-priority] (neoforge2612) savePriority: writing {} for {}", value, this.getClass().getName());
-        data.putInt("assemblermatrix_prioritization_priority", value);
+        output.putInt(PRIORITY_TAG, value);
     }
 
-    @Inject(method = "loadTag(Lnet/minecraft/nbt/CompoundTag;Lnet/minecraft/core/HolderLookup$Provider;)V",
+    @Inject(method = "loadTag(Lnet/minecraft/world/level/storage/ValueInput;)V",
             at = @At("TAIL"), require = 0)
-    private void assemblermatrix_prioritization$loadPriority(CompoundTag data, HolderLookup.Provider registries, CallbackInfo ci) {
-        int value = data.getInt("assemblermatrix_prioritization_priority").orElse(0);
+    private void assemblermatrix_prioritization$loadPriority(ValueInput input, CallbackInfo ci) {
+        int value = input.getIntOr(PRIORITY_TAG, 0);
         Constants.LOG.info("[DEBUG-priority] (neoforge2612) loadPriority: read {} for {}", value, this.getClass().getName());
         ((MatrixPriorityHost) this).assemblermatrix_prioritization$setMatrixPriorityFromCluster(value);
     }
