@@ -92,6 +92,10 @@ what to check/test, and when to close the client and report results back.
 - Branch flow: feature/fix branches merge into `develop` first. A `release/vX.Y.Z` branch is then
   cut from `develop` for the version bump + changelog commit, and that branch is what gets PR'd
   into `master`.
+- User test checklist: use `docs/user-test-checklist-template.md` as the source. Copy its body
+  into the `release/vX.Y.Z` -> `master` PR description (filling in the fixed items for that
+  release) rather than committing a version-specific checklist file — the template itself is
+  the only checklist file tracked in the repository.
 
 ## Coding Conventions
 - Follow the `.editorconfig` file in this repository as the source of truth for code
