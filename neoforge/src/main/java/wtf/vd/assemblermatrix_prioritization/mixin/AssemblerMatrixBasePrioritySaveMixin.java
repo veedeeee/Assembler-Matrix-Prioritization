@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import wtf.vd.assemblermatrix_prioritization.Constants;
 import wtf.vd.assemblermatrix_prioritization.access.MatrixPriorityHost;
 
 // MC 1.21.1 changed BlockEntity.saveAdditional / loadTag to 2-param signatures.
@@ -21,7 +20,6 @@ public abstract class AssemblerMatrixBasePrioritySaveMixin {
             at = @At("TAIL"), require = 0)
     private void assemblermatrix_prioritization$savePriority(CompoundTag data, HolderLookup.Provider registries, CallbackInfo ci) {
         int value = ((MatrixPriorityHost) this).assemblermatrix_prioritization$getMatrixPriority();
-        Constants.LOG.info("[DEBUG-priority] (neoforge) savePriority: writing {} for {}", value, this.getClass().getName());
         data.putInt("assemblermatrix_prioritization_priority", value);
     }
 
@@ -29,7 +27,6 @@ public abstract class AssemblerMatrixBasePrioritySaveMixin {
             at = @At("TAIL"), require = 0)
     private void assemblermatrix_prioritization$loadPriority(CompoundTag data, HolderLookup.Provider registries, CallbackInfo ci) {
         int value = data.getInt("assemblermatrix_prioritization_priority");
-        Constants.LOG.info("[DEBUG-priority] (neoforge) loadPriority: read {} for {}", value, this.getClass().getName());
         ((MatrixPriorityHost) this).assemblermatrix_prioritization$setMatrixPriorityFromCluster(value);
     }
 }

@@ -7,7 +7,6 @@ import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import wtf.vd.assemblermatrix_prioritization.Constants;
 import wtf.vd.assemblermatrix_prioritization.access.MatrixPriorityHost;
 
 // NeoForge 26.1.2 replaced the CompoundTag-based BlockEntity.saveAdditional/loadTag signatures
@@ -23,7 +22,6 @@ public abstract class AssemblerMatrixBasePrioritySaveMixin {
             at = @At("TAIL"), require = 0)
     private void assemblermatrix_prioritization$savePriority(ValueOutput output, CallbackInfo ci) {
         int value = ((MatrixPriorityHost) this).assemblermatrix_prioritization$getMatrixPriority();
-        Constants.LOG.info("[DEBUG-priority] (neoforge2612) savePriority: writing {} for {}", value, this.getClass().getName());
         output.putInt(PRIORITY_TAG, value);
     }
 
@@ -31,7 +29,6 @@ public abstract class AssemblerMatrixBasePrioritySaveMixin {
             at = @At("TAIL"), require = 0)
     private void assemblermatrix_prioritization$loadPriority(ValueInput input, CallbackInfo ci) {
         int value = input.getIntOr(PRIORITY_TAG, 0);
-        Constants.LOG.info("[DEBUG-priority] (neoforge2612) loadPriority: read {} for {}", value, this.getClass().getName());
         ((MatrixPriorityHost) this).assemblermatrix_prioritization$setMatrixPriorityFromCluster(value);
     }
 }
