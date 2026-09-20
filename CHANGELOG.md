@@ -1,3 +1,9 @@
+v1.0.6
+- MODIFY: Extend ExtendedAE and AE2 dependency version ranges to allow players to use compatible newer versions.
+  - Forge 1.20.1: AE2 [7KVs6HMQ, ∞), ExtendedAE [1.20-1.4.20, 1.21)+forge
+  - NeoForge 1.21.1: AE2 [current, ∞), ExtendedAE [1.21-2.2.29, 1.21-2.3)+neoforge
+  - NeoForge 26.1.2: AE2 [current, ∞); ExtendedAE tracked via local alpha jar
+
 v1.0.5
 - FIX: (Forge) Assembler Matrix priority was never saved on world/game exit on v1.0.4.
 - FIX: (NeoForge 26.1.2) Assembler Matrix priority was never saved or loaded at all because of the logic on ExtendedAE had been changed. Both of ExtendedAE and this mod on 26.1.2 is Alpha phase.

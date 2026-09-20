@@ -56,17 +56,19 @@ configurations.named("compileClasspath").configure {
 }
 
 dependencies {
-    compileOnly("maven.modrinth:ae2:${ae2_2612_version}") {
+    compileOnly("maven.modrinth:ae2:[${ae2_2612_version},)") {
         transitive = false
     }
-    runtimeOnly "maven.modrinth:ae2:${ae2_2612_version}"
+    runtimeOnly "maven.modrinth:ae2:[${ae2_2612_version},)"
     runtimeOnly "maven.modrinth:jei:${jei_2612_version}"
     runtimeOnly "maven.modrinth:jade:${jade_2612_version}"
     runtimeOnly "maven.modrinth:guideme:${guideme_2612_version}"
 
-    // ExtendedAE 26.1.2 is currently tracked from alpha builds on the 26.1.2-neoforge line.
-    // Place the alpha jar here for local runClient/runServer launches:
+    // ExtendedAE 26.1.2 is tracked from the 26.1.2-neoforge alpha line.
+    // For local development, place the latest compatible alpha jar here:
     // neoforge2612/libs/extended-ae-26.1.2-neoforge-alpha.jar
+    // In future, when a stable Modrinth release is available, update to:
+    // runtimeOnly "maven.modrinth:extended-ae:[26.1.2, 26.2)+neoforge"
     def extendedAe2612Alpha = file("libs/extended-ae-26.1.2-neoforge-alpha.jar")
     if (extendedAe2612Alpha.exists()) {
         runtimeOnly files(extendedAe2612Alpha)
