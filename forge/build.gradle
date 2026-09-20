@@ -101,13 +101,14 @@ dependencies {
     minecraft "net.minecraftforge:forge:${forgeMinecraftVersion}-${forgeVersion}"
     compileOnly "org.spongepowered:mixin:0.8.5"
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
-    compileOnly "maven.modrinth:ae2:7KVs6HMQ"
-    runtimeOnly "maven.modrinth:ae2:7KVs6HMQ"
+    compileOnly "maven.modrinth:ae2:[7KVs6HMQ,)"
+    runtimeOnly "maven.modrinth:ae2:[7KVs6HMQ,)"
     runtimeOnly fg.deobf("mezz.jei:jei-1.20.1-forge:15.0.0.12")
     runtimeOnly fg.deobf("curse.maven:jade-324717:4573193")
     runtimeOnly fg.deobf("org.appliedenergistics:guideme:20.1.7")
     runtimeOnly fg.deobf("curse.maven:ex-pattern-provider-892005:7144417")
     runtimeOnly fg.deobf("curse.maven:glodium-957920:5226922")
+    runtimeOnly "maven.modrinth:extended-ae:[1.20-1.4.20, 1.21)+forge"
 
     // Forge's hack fix
     implementation('net.sf.jopt-simple:jopt-simple:5.0.4') { version { strictly '5.0.4' } }
